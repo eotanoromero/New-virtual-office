@@ -9,15 +9,16 @@ import { CommonModule } from '@angular/common';
             <div class="card mb-0">
                 <div class="flex justify-between mb-4">
                     <div>
-                        <span class="block text-muted-color font-medium mb-4">Orders</span>
-                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">152</div>
+                        <span class="block text-muted-color font-medium mb-4">Tus consumos</span>
+
+                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">$152</div>
                     </div>
                     <div class="flex items-center justify-center rounded-border" style="width: 2.5rem; height: 2.5rem; background-color: #B3D4E5;">
-                        <i class="pi pi-shopping-cart" style="color: #00558C; font-size: 1.25rem;"></i>
+                        <i class="pi pi-dollar" style="color: #00558C; font-size: 1.25rem;"></i>
                     </div>
                 </div>
-                <span class="text-primary font-medium">24 new </span>
-                <span class="text-muted-color">since last visit</span>
+                <span class="text-primary font-medium">%52+ </span>
+                <span class="text-muted-color">since last week</span>
             </div>
         </div>
         <div class="col-span-12 lg:col-span-6 xl:col-span-3">

@@ -127,6 +127,17 @@ export class AppMenu {
                         routerLink: ['/documentation']
                     }
                 ]
+            },
+
+            {
+                label: '',
+                items: [
+                    {
+                        label: 'Cerrar sesion',
+                        icon: 'pi pi-fw pi-arrow-right',
+                        routerLink: ['/documentation']
+                    }
+                ]
             }
         ];
     }
