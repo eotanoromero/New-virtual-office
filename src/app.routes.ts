@@ -1,19 +1,25 @@
 import { Routes } from '@angular/router';
-import { AppLayout } from './app/layout/component/app.layout';
-import { Dashboard } from './app/pages/dashboard/dashboard';
-import { Documentation } from './app/pages/documentation/documentation';
 import { Notfound } from './app/pages/notfound/notfound';
 
 export const appRoutes: Routes = [
     {
         path: '',
-        component: AppLayout,
-        children: [
-            { path: '', component: Dashboard },
-            { path: 'documentation', component: Documentation },
-            { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
-        ]
+        redirectTo: 'user',
+        pathMatch: 'full'
     },
-    { path: 'notfound', component: Notfound },
-    { path: '**', redirectTo: '/notfound' }
+
+    {
+        path: 'user',
+        loadChildren: () => import('./app/pages/user/user-module').then((m) => m.UserModule),
+        pathMatch: 'full'
+    },
+
+    {
+        path: 'dashboard',
+        loadChildren: () => import('./app/pages/dashboard/dashboard-module').then((m) => m.DashboardModule)
+    },
+    {
+        path: '**',
+        loadChildren: () => import('./app/pages/pages-module').then((m) => m.PagesModule)
+    }
 ];

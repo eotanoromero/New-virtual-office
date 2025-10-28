@@ -6,17 +6,22 @@ import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { AppFooter } from './app.footer';
 import { LayoutService } from '../service/layout.service';
+import { AdminDashboard } from '@/pages/dashboard/admin-dashboard/admin-dashboard';
+import { AffiliateDashboard } from '@/pages/dashboard/affiliate-dashboard/affiliate-dashboard';
+import { Profile } from '@/shared/enum/profile.enum';
+import { HasRoleDirective } from '@/shared/directive/has-role.directive';
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter],
+    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter, AdminDashboard, AffiliateDashboard, AdminDashboard, AffiliateDashboard, HasRoleDirective],
     template: `<div class="layout-wrapper" [ngClass]="containerClass">
         <app-topbar></app-topbar>
         <app-sidebar></app-sidebar>
         <div class="layout-main-container">
             <div class="layout-main">
-                <router-outlet></router-outlet>
+                <app-admin-dashboard *hasRole="[Profile.ADMIN]"></app-admin-dashboard>
+                <app-affiliate-dashboard *hasRole="[Profile.AFFILIATE]"></app-affiliate-dashboard>
             </div>
             <app-footer></app-footer>
         </div>
@@ -24,6 +29,8 @@ import { LayoutService } from '../service/layout.service';
     </div> `
 })
 export class AppLayout {
+    Profile = Profile;
+
     overlayMenuOpenSubscription: Subscription;
 
     menuOutsideClickListener: any;

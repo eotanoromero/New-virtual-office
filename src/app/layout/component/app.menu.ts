@@ -32,12 +32,12 @@ export class AppMenu {
                             {
                                 label: 'Mi perfil',
                                 icon: 'pi pi-fw pi-minus',
-                                routerLink: ['/auth/login']
+                                routerLink: ['/my-profile']
                             },
                             {
                                 label: 'Actualizar mis datos',
                                 icon: 'pi pi-fw pi-minus',
-                                routerLink: ['/auth/login']
+                                routerLink: ['/update-profile']
                             }
                         ]
                     }
@@ -45,27 +45,27 @@ export class AppMenu {
             },
             {
                 label: 'Inicio',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+                items: [{ label: 'Dashboard', icon: '', routerLink: ['/'] }]
             },
             {
                 label: 'CONSUMOS',
-                icon: 'pi pi-fw pi-briefcase',
+                icon: '',
                 routerLink: ['/pages'],
                 items: [
                     {
                         label: 'Medicamentos',
-                        icon: 'pi pi-fw pi-bars',
-                        routerLink: ['/landing']
+                        icon: '',
+                        routerLink: ['/medicine']
                     },
                     {
                         label: 'Autorizaciones',
-                        icon: 'pi pi-fw pi-bars',
-                        routerLink: ['/landing']
+                        icon: '',
+                        routerLink: ['/authorization']
                     },
                     {
                         label: 'Reembolsos',
-                        icon: 'pi pi-fw pi-bars',
-                        routerLink: ['/pages/crud']
+                        icon: '',
+                        routerLink: ['/refund']
                     }
                 ]
             },
@@ -76,37 +76,37 @@ export class AppMenu {
                 items: [
                     {
                         label: 'Dependientes',
-                        icon: 'pi pi-fw pi-id-card',
-                        routerLink: ['/landing']
+                        icon: '',
+                        routerLink: ['/dependent-affiliate']
                     },
                     {
                         label: 'Proveedores de salud',
-                        icon: 'pi pi-fw pi-heart',
-                        routerLink: ['/pages/crud']
+                        icon: '',
+                        routerLink: ['/health-providers']
                     },
                     {
                         label: 'Reembolsos',
-                        icon: 'pi pi-fw pi-plus',
-                        routerLink: ['/landing']
+                        icon: '',
+                        routerLink: ['/refund']
                     },
                     {
                         label: 'Autorizaciones',
-                        icon: 'pi pi-fw pi-plus',
-                        routerLink: ['/pages/crud']
+                        icon: '',
+                        routerLink: ['/authorizations']
                     },
                     {
                         label: 'Pagos',
-                        icon: 'pi pi-fw pi-credit-card',
+                        icon: '',
                         items: [
                             {
                                 label: 'Pagar Poliza',
-                                icon: 'pi pi-fw pi-minus',
-                                routerLink: ['/landing']
+                                icon: '',
+                                routerLink: ['/Payment']
                             },
                             {
                                 label: 'Historico de pagos',
-                                icon: 'pi pi-fw pi-minus',
-                                routerLink: ['/landing']
+                                icon: '',
+                                routerLink: ['/Payment']
                             }
                         ]
                     }
