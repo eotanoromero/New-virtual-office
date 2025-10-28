@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
 
@@ -16,6 +16,8 @@ import { AppMenuitem } from './app.menuitem';
     </ul> `
 })
 export class AppMenu {
+    constructor(private router: Router) {}
+
     model: MenuItem[] = [];
 
     ngOnInit() {
@@ -135,10 +137,14 @@ export class AppMenu {
                     {
                         label: 'Cerrar sesion',
                         icon: 'pi pi-fw pi-arrow-right',
-                        routerLink: ['/documentation']
+                        command: () => this.logout()
                     }
                 ]
             }
         ];
+    }
+    logout() {
+        localStorage.removeItem('user');
+        this.router.navigate(['/user']);
     }
 }
