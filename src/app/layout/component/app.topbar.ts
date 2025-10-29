@@ -18,7 +18,7 @@ import { LayoutService } from '../service/layout.service';
             <a class="layout-topbar-logo" routerLink="/">
                 <img src="short.png" alt="Perfil" class="p-2 object-fit-cover logotype" style="width: 55px; height:55px;" />
 
-                <span style="font-size: 14px;">ARS RESERVAS</span>
+                <span style="font-size: 20px; color: #264E72">ARS RESERVAS</span>
             </a>
         </div>
 

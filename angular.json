@@ -32,7 +32,9 @@
                             }
                         ],
                         "styles": [
-                            "src/assets/styles.scss"
+                            "src/assets/styles.scss",
+                            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+
                         ],
                         "scripts": []
                     },
@@ -79,7 +81,9 @@
                             }
                         ],
                         "styles": [
-                            "src/assets/styles.scss"
+                            "src/assets/styles.scss",
+                            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+
                         ],
                         "scripts": []
                     }

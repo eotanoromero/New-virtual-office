@@ -1,6 +1,5 @@
 export class AvatarGenerator {
     /**
-     * Genera una imagen de perfil con iniciales y un fondo de color consistente basado en el nombre.
      * @param name El nombre de la persona.
      * @param surname El apellido de la persona.
      * @returns Un string con la URL de la imagen generada en formato base64.
@@ -15,7 +14,7 @@ export class AvatarGenerator {
         }
 
         // Colores predefinidos
-        const colors = ['#063452', '#00aef0', '#ff9e1b', '#63666a', '#a7a8a9'];
+        const colors = ['#00aef0', '#063452', '#63666a', '#a7a8a9', '#00aef0'];
         const colorIndex = AvatarGenerator.hashCode(name + surname) % colors.length;
         const consistentColor = colors[Math.abs(colorIndex)];
 

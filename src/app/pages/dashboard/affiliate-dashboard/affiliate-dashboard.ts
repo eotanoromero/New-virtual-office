@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { StatsWidget } from '../components/statswidget';
+import { Statswidget } from '../components/statswidget/statswidget';
 import { RecentSalesWidget } from '../components/recentsaleswidget';
 import { BestSellingWidget } from '../components/bestsellingwidget';
 import { RevenueStreamWidget } from '../components/revenuestreamwidget';
 
 @Component({
     selector: 'app-affiliate-dashboard',
-    imports: [StatsWidget],
+    imports: [Statswidget],
     templateUrl: './affiliate-dashboard.html',
     styleUrl: './affiliate-dashboard.scss'
 })
