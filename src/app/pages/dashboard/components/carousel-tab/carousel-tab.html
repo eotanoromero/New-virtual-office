@@ -8,7 +8,7 @@
     <p-tabpanels>
         <p-tabpanel value="0">
             <div class="carousel-container">
-                <p-carousel [value]="cards" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
+                <p-carousel [value]="cardsAutorizaciones" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
                     <ng-template let-card pTemplate="item">
                         <div class="card-wrapper">
                             <div class="stat-card" [style.border-left-color]="card.color">
@@ -31,7 +31,7 @@
 
         <p-tabpanel value="1">
             <div class="carousel-container">
-                <p-carousel [value]="cards" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
+                <p-carousel [value]="cardsReembolsos" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
                     <ng-template let-card pTemplate="item">
                         <div class="card-wrapper">
                             <div class="stat-card" [style.border-left-color]="card.color">
@@ -54,7 +54,7 @@
 
         <p-tabpanel value="2">
             <div class="carousel-container">
-                <p-carousel [value]="cards" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
+                <p-carousel [value]="cardsDependientes" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
                     <ng-template let-card pTemplate="item">
                         <div class="card-wrapper">
                             <div class="stat-card" [style.border-left-color]="card.color">

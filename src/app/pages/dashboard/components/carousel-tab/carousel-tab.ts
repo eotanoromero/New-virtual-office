@@ -11,6 +11,7 @@ interface CardData {
     icon: string;
     color: string;
 }
+
 @Component({
     selector: 'app-carousel-tab',
     standalone: true,
@@ -19,15 +20,18 @@ interface CardData {
     styleUrl: './carousel-tab.scss'
 })
 export class CarouselTab {
-    cards: CardData[] = [];
-    cardsReimbursement: CardData[] = [];
+    cardsAutorizaciones: CardData[] = [];
+    cardsReembolsos: CardData[] = [];
+    cardsDependientes: CardData[] = [];
 
     activeIndex: number = 0;
+
     ngOnInit() {
-        this.cards = [
+        // Cards para Autorizaciones
+        this.cardsAutorizaciones = [
             {
                 id: 1,
-                title: 'Afiliaciones',
+                title: 'Autorizaciones',
                 description: 'Consumos totales',
                 value: '$152',
                 icon: 'bi bi-card-checklist',
@@ -35,7 +39,7 @@ export class CarouselTab {
             },
             {
                 id: 2,
-                title: 'Afiliaciones',
+                title: 'Autorizaciones',
                 description: 'Ingresos totales',
                 value: '$2,100',
                 icon: 'bi bi-card-checklist',
@@ -43,70 +47,99 @@ export class CarouselTab {
             },
             {
                 id: 3,
-                title: 'Afiliaciones',
+                title: 'Autorizaciones',
                 description: 'Clientes activos',
                 value: '28,441',
-                icon: 'pi pi-users',
+                icon: 'bi bi-card-checklist',
                 color: '#00AEF0'
             },
             {
                 id: 4,
-                title: 'Afiliaciones',
+                title: 'Autorizaciones',
                 description: 'Comentarios sin leer',
                 value: '152',
                 icon: 'bi bi-card-checklist',
-                color: '#264E72'
+                color: '#00AEF0'
             },
             {
                 id: 5,
-                title: 'Afiliaciones',
+                title: 'Autorizaciones',
                 description: 'Pendientes',
                 value: '45',
-                icon: 'pi pi-check-circle',
+                icon: 'bi bi-card-checklist',
+                color: '#00AEF0'
+            }
+        ];
+
+        // Cards para Reembolsos
+        this.cardsReembolsos = [
+            {
+                id: 1,
+                title: 'Reembolsos',
+                description: 'Solicitudes totales',
+                value: '$3,250',
+                icon: 'pi pi-receipt',
+                color: '#F89420'
+            },
+            {
+                id: 2,
+                title: 'Reembolsos',
+                description: 'Aprobados',
+                value: '$2,800',
+                icon: 'pi pi-receipt',
+                color: '#F89420'
+            },
+            {
+                id: 3,
+                title: 'Reembolsos',
+                description: 'Pendientes',
+                value: '$450',
+                icon: 'pi pi-receipt',
+                color: '#F89420'
+            },
+            {
+                id: 4,
+                title: 'Reembolsos',
+                description: 'Rechazados',
+                value: '12',
+                icon: 'pi pi-receipt',
                 color: '#F89420'
             }
         ];
 
-        this.cardsReimbursement = [
+        // Cards para Dependientes
+        this.cardsDependientes = [
             {
                 id: 1,
-                title: 'Afiliaciones',
-                description: 'Consumos totales',
-                value: '$152',
-                icon: 'bi bi-card-checklist',
-                color: '#00AEF0'
+                title: 'Dependientes',
+                description: 'Total registrados',
+                value: '156',
+                icon: 'pi pi-users',
+                color: '#d4d5d7'
             },
             {
                 id: 2,
-                title: 'Afiliaciones',
-                description: 'Ingresos totales',
-                value: '$2,100',
-                icon: 'bi bi-card-checklist',
-                color: '#F89420'
+                title: 'Dependientes',
+                description: 'Activos',
+                value: '142',
+                icon: 'pi pi-users',
+                color: '#d4d5d7'
             },
             {
                 id: 3,
-                title: 'Afiliaciones',
-                description: 'Clientes activos',
-                value: '28,441',
+                title: 'Dependientes',
+                description: 'Por verificar',
+                value: '14',
                 icon: 'pi pi-users',
-                color: '#00AEF0'
+                color: '#d4d5d7'
             },
             {
                 id: 4,
-                title: 'Afiliaciones',
-                description: 'Comentarios sin leer',
-                value: '152',
-                icon: 'pi pi-comments',
-                color: '#264E72'
-            },
-            {
-                id: 5,
-                title: 'Afiliaciones',
-                description: 'Pendientes',
-                value: '45',
-                icon: 'pi pi-check-circle',
-                color: '#F89420'
+                title: 'Dependientes',
+                description: 'Menores de edad',
+                value: '89',
+                icon: 'pi pi-users',
+                color: '#d4d5d7'
             }
         ];
     }
