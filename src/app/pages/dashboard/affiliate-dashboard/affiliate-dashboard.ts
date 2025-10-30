@@ -3,6 +3,7 @@ import { Statswidget } from '../components/statswidget/statswidget';
 import { RecentSalesWidget } from '../components/recentsaleswidget';
 import { BestSellingWidget } from '../components/bestsellingwidget';
 import { RevenueStreamWidget } from '../components/revenuestreamwidget';
+import { CarouselTab } from '../components/carousel-tab/carousel-tab';
 
 @Component({
     selector: 'app-affiliate-dashboard',

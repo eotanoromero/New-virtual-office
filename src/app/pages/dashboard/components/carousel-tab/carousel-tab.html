@@ -1,0 +1,78 @@
+<p-tabs value="0">
+    <p-tablist>
+        <p-tab value="0">Autorizaciones</p-tab>
+        <p-tab value="1">Reembolsos</p-tab>
+        <p-tab value="2">Dependientes</p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+        <p-tabpanel value="0">
+            <div class="carousel-container">
+                <p-carousel [value]="cards" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
+                    <ng-template let-card pTemplate="item">
+                        <div class="card-wrapper">
+                            <div class="stat-card" [style.border-left-color]="card.color">
+                                <div class="card-header">
+                                    <div class="icon-container" [style.background-color]="card.color + '20'">
+                                        <i [class]="card.icon" [style.color]="card.color"></i>
+                                    </div>
+                                </div>
+                                <!-- <div class="card-body">
+                                    <h3 class="card-title">{{ card.title }}</h3>
+                                    <p class="card-value">{{ card.value }}</p>
+                                    <p class="card-description">{{ card.description }}</p>
+                                </div> -->
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="1">
+            <div class="carousel-container">
+                <p-carousel [value]="cards" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
+                    <ng-template let-card pTemplate="item">
+                        <div class="card-wrapper">
+                            <div class="stat-card" [style.border-left-color]="card.color">
+                                <div class="card-header">
+                                    <div class="icon-container" [style.background-color]="card.color + '20'">
+                                        <i [class]="card.icon" [style.color]="card.color"></i>
+                                    </div>
+                                </div>
+                                <!-- <div class="card-body">
+                                    <h3 class="card-title">{{ card.title }}</h3>
+                                    <p class="card-value">{{ card.value }}</p>
+                                    <p class="card-description">{{ card.description }}</p>
+                                </div> -->
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+        </p-tabpanel>
+
+        <p-tabpanel value="2">
+            <div class="carousel-container">
+                <p-carousel [value]="cards" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" [showIndicators]="true" [showNavigators]="false" (onPage)="onPageChange($event)">
+                    <ng-template let-card pTemplate="item">
+                        <div class="card-wrapper">
+                            <div class="stat-card" [style.border-left-color]="card.color">
+                                <div class="card-header">
+                                    <div class="icon-container" [style.background-color]="card.color + '20'">
+                                        <i [class]="card.icon" [style.color]="card.color"></i>
+                                    </div>
+                                </div>
+                                <!-- <div class="card-body">
+                                    <h3 class="card-title">{{ card.title }}</h3>
+                                    <p class="card-value">{{ card.value }}</p>
+                                    <p class="card-description">{{ card.description }}</p>
+                                </div> -->
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>
