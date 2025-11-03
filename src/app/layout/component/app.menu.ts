@@ -15,16 +15,16 @@ import { AvatarGenerator } from '../../shared/helper/avatar_helper';
         <ul class="layout-menu" *hasRole="[Profile.AFFILIATE]">
              
             <li class="mt-4 mb-0 layout-root-menuitem" [ngClass]="{ 'active-menuitem': isProfileMenuOpen }">
-                <div class="card mb-4" style="background-color: #264E72; padding: 1rem; color: #ffffff; cursor: pointer;" (click)="toggleProfileMenu()">
+                <div class="card mb-4" style="background-color: #f1f5f9; padding: 1rem; color: red; cursor: pointer;" (click)="toggleProfileMenu()">
                     <div class="flex align-items-center justify-content-between user-profile">
                         <div class="flex align-items-center">
                             <img [src]="avatarUrl" alt="Avatar del usuario" class="layout-menu me-2" width="36" height="36" />
                             <div>
-                                <span class="block font-medium mb-1" style="color:#ffffff; font-size:16px">{{ user.name }}</span>
-                                <span class="block" style="color:#ffffff; font-size:14px">{{ user.email }}</span>
+                                <span class="block font-medium mb-1" style="color:#ffffff; font-size:14px">{{ user.name }}</span>
+                                <span class="block" style="color:#ffffff; font-size:13px">{{ user.email }}</span>
                             </div>
                         </div>
-                        <i [ngClass]="{ 'pi-angle-down': !isProfileMenuOpen, 'pi-angle-up': isProfileMenuOpen }" class="pi pi-fw" style="color: #ffffff; margin-left: auto; margin-top:13px"></i>
+                        <i [ngClass]="{ 'pi-angle-down': !isProfileMenuOpen, 'pi-angle-up': isProfileMenuOpen }" class="pi pi-fw" style="color: #264E72; margin-left: auto; margin-top:13px"></i>
                     </div>
                 </div>
 
@@ -42,16 +42,16 @@ import { AvatarGenerator } from '../../shared/helper/avatar_helper';
 
         <ul class="layout-menu" *hasRole="[Profile.ADMIN]">
             <li class="mt-4 mb-0 layout-root-menuitem" [ngClass]="{ 'active-menuitem': isProfileMenuOpen }">
-                <div class="card mb-4" style="background-color: #264E72; padding: 1rem; color: #ffffff; cursor: pointer;" (click)="toggleProfileMenu()">
+                <div class="card mb-4" style="background-color: #f1f5f9; padding: 1rem; color: #ffffff; cursor: pointer;" (click)="toggleProfileMenu()">
                     <div class="flex align-items-center justify-content-between user-profile">
                         <div class="flex align-items-center">
                             <img [src]="avatarUrl" alt="Avatar del usuario" class="layout-menu me-2" width="36" height="36" />
                             <div>
-                                <span class="block font-medium mb-1" style="color:#ffffff; font-size:16px">{{ user.name }}</span>
-                                <span class="block" style="color:#ffffff; font-size:14px">{{ user.email }}</span>
+                                <span class="block font-medium mb-1" style="color:#264E72; font-size:14px">{{ user.name }}</span>
+                                <span class="block" style="color:#264E72; font-size:13px">{{ user.email }}</span>
                             </div>
                         </div>
-                        <i [ngClass]="{ 'pi-angle-down': !isProfileMenuOpen, 'pi-angle-up': isProfileMenuOpen }" class="pi pi-fw" style="color: #ffffff; margin-left: auto; margin-top:13px"></i>
+                        <i [ngClass]="{ 'pi-angle-down': !isProfileMenuOpen, 'pi-angle-up': isProfileMenuOpen }" class="pi pi-fw" style="color: #264E72; margin-left: auto; margin-top:13px"></i>
                     </div>
                 </div>
 
@@ -84,6 +84,12 @@ import { AvatarGenerator } from '../../shared/helper/avatar_helper';
             }
             .submenu-profile li {
                 background-color: #ffffff;
+            }
+
+            :host ::ng-deep.layout-menu ul a {
+                font-size: 0.9rem;
+                text-transform: none;
+                color: #264e72;
             }
         </style>
     `
