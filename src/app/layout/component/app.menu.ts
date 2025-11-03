@@ -15,13 +15,13 @@ import { AvatarGenerator } from '../../shared/helper/avatar_helper';
         <ul class="layout-menu" *hasRole="[Profile.AFFILIATE]">
              
             <li class="mt-4 mb-0 layout-root-menuitem" [ngClass]="{ 'active-menuitem': isProfileMenuOpen }">
-                <div class="card mb-4" style="background-color: #f1f5f9; padding: 1rem; color: red; cursor: pointer;" (click)="toggleProfileMenu()">
+                <div class="card mb-4" style="background-color: #f1f5f9; padding: 1rem; #ffffff: red; cursor: pointer;" (click)="toggleProfileMenu()">
                     <div class="flex align-items-center justify-content-between user-profile">
                         <div class="flex align-items-center">
                             <img [src]="avatarUrl" alt="Avatar del usuario" class="layout-menu me-2" width="36" height="36" />
                             <div>
-                                <span class="block font-medium mb-1" style="color:#ffffff; font-size:14px">{{ user.name }}</span>
-                                <span class="block" style="color:#ffffff; font-size:13px">{{ user.email }}</span>
+                                <span class="block font-medium mb-1" style="color:#264E72; font-size:14px">{{ user.name }}</span>
+                                <span class="block" style="color:#264E72; font-size:13px">{{ user.code }}</span>
                             </div>
                         </div>
                         <i [ngClass]="{ 'pi-angle-down': !isProfileMenuOpen, 'pi-angle-up': isProfileMenuOpen }" class="pi pi-fw" style="color: #264E72; margin-left: auto; margin-top:13px"></i>
@@ -48,7 +48,7 @@ import { AvatarGenerator } from '../../shared/helper/avatar_helper';
                             <img [src]="avatarUrl" alt="Avatar del usuario" class="layout-menu me-2" width="36" height="36" />
                             <div>
                                 <span class="block font-medium mb-1" style="color:#264E72; font-size:14px">{{ user.name }}</span>
-                                <span class="block" style="color:#264E72; font-size:13px">{{ user.email }}</span>
+                                <span class="block" style="color:#264E72; font-size:13px"><b>Código afiliado: </b>{{ user.code }}</span>
                             </div>
                         </div>
                         <i [ngClass]="{ 'pi-angle-down': !isProfileMenuOpen, 'pi-angle-up': isProfileMenuOpen }" class="pi pi-fw" style="color: #264E72; margin-left: auto; margin-top:13px"></i>
@@ -56,8 +56,8 @@ import { AvatarGenerator } from '../../shared/helper/avatar_helper';
                 </div>
 
                 <ul class="submenu-profile" *ngIf="isProfileMenuOpen">
-                    <li app-menuitem [item]="{ label: 'Mi perfil', icon: 'pi pi-fw pi-user', routerLink: ['/my-profile'] }" [index]="-1" [root]="false"></li>
-                    <li app-menuitem [item]="{ label: 'Actualizar mis datos', icon: 'pi pi-fw pi-pencil', routerLink: ['/update-profile'] }" [index]="-1" [root]="false"></li>
+                    <li app-menuitem [item]="{ label: 'Mi perfil', icon: 'pi pi-fw pi-user', routerLink: ['/profile/dependents'] }" [index]="-1" [root]="false"></li>
+                    <li app-menuitem [item]="{ label: 'Actualizar mis datos', icon: 'pi pi-fw pi-pencil', routerLink: ['/profile/update-profile'] }" [index]="-1" [root]="false"></li>
                 </ul>
             </li>
             <li class="menu-separator pt-3"></li>
@@ -113,7 +113,7 @@ export class AppMenu {
         this.model = [
             {
                 label: 'Inicio',
-                items: [{ label: 'Dashboard', icon: 'pi pi-th-large', routerLink: ['/documentation'] }]
+                items: [{ label: 'Dashboard', icon: 'pi pi-th-large', routerLink: [''] }]
             },
             {
                 label: 'CONSUMOS',
@@ -123,44 +123,43 @@ export class AppMenu {
                     {
                         label: 'Medicamentos',
                         icon: 'bi bi-prescription2',
-                        routerLink: ['/medicine']
+                        routerLink: ['/page/medicine']
                     },
                     {
                         label: 'Autorizaciones',
                         icon: 'bi bi-card-checklist',
-                        routerLink: ['/authorization']
+                        routerLink: ['/page/authorization']
                     },
                     {
                         label: 'Reembolsos',
                         icon: 'pi pi-receipt',
-                        routerLink: ['/refund']
+                        routerLink: ['/page/refund']
                     }
                 ]
             },
             {
                 label: 'SOLICITUDES',
                 icon: 'pi pi-fw pi-briefcase',
-                routerLink: ['/pages'],
                 items: [
                     {
                         label: 'Dependientes',
                         icon: 'pi pi-users',
-                        routerLink: ['/dependent-affiliate']
+                        routerLink: ['/page/dependent']
                     },
                     {
                         label: 'Proveedores de salud',
                         icon: 'bi bi-hospital',
-                        routerLink: ['/health-providers']
+                        routerLink: ['/page/health-provider']
                     },
                     {
                         label: 'Autorizaciones',
                         icon: 'bi bi-card-checklist',
-                        routerLink: ['/authorizations']
+                        routerLink: ['/page/authorizations']
                     },
                     {
                         label: 'Reembolsos',
                         icon: 'pi pi-receipt',
-                        routerLink: ['/refund']
+                        routerLink: ['/page/refund']
                     },
                     {
                         label: 'Pagos',
@@ -169,12 +168,12 @@ export class AppMenu {
                             {
                                 label: 'Pagar Poliza',
                                 icon: '',
-                                routerLink: ['/Payment']
+                                routerLink: ['/page/add-payment']
                             },
                             {
                                 label: 'Historico de pagos',
                                 icon: '',
-                                routerLink: ['/Payment']
+                                routerLink: ['/page/payment-history']
                             }
                         ]
                     }
@@ -187,12 +186,12 @@ export class AppMenu {
                     {
                         label: 'Contacto',
                         icon: 'pi pi-fw pi-headphones',
-                        routerLink: ['/documentation']
+                        routerLink: ['/page/documentation']
                     },
                     {
                         label: 'Reporte de errores',
                         icon: 'pi pi-fw pi-wrench',
-                        routerLink: ['/documentation']
+                        routerLink: ['/page/report']
                     }
                 ]
             },
@@ -212,7 +211,7 @@ export class AppMenu {
         this.modelAdmin = [
             {
                 label: 'Inicio',
-                items: [{ label: 'Dashboard', icon: 'pi pi-th-large', routerLink: ['/'] }]
+                items: [{ label: 'Dashboard', icon: 'pi pi-th-large', routerLink: ['/dashboard'] }]
             },
             {
                 label: 'CONSUMOS',
@@ -222,17 +221,17 @@ export class AppMenu {
                     {
                         label: 'Medicamentos',
                         icon: 'bi bi-prescription2',
-                        routerLink: ['/medicine']
+                        routerLink: ['/page/medicine']
                     },
                     {
                         label: 'Autorizaciones',
                         icon: 'bi bi-card-checklist',
-                        routerLink: ['/authorization']
+                        routerLink: ['/page/authorization']
                     },
                     {
                         label: 'Reembolsos',
                         icon: 'pi pi-receipt',
-                        routerLink: ['/refund']
+                        routerLink: ['/page/refund']
                     }
                 ]
             },
@@ -244,22 +243,22 @@ export class AppMenu {
                     {
                         label: 'Dependientes',
                         icon: 'pi pi-users',
-                        routerLink: ['/dependent-affiliate']
+                        routerLink: ['/page/dependent']
                     },
                     {
                         label: 'Proveedores de salud',
                         icon: 'bi bi-hospital',
-                        routerLink: ['/health-providers']
+                        routerLink: ['/page/health-provider']
                     },
                     {
                         label: 'Autorizaciones',
                         icon: 'bi bi-card-checklist',
-                        routerLink: ['/authorizations']
+                        routerLink: ['/page/authorization']
                     },
                     {
                         label: 'Reembolsos',
                         icon: 'pi pi-receipt',
-                        routerLink: ['/refund']
+                        routerLink: ['/page/refund']
                     },
                     {
                         label: 'Pagos',
@@ -268,12 +267,12 @@ export class AppMenu {
                             {
                                 label: 'Pagar Poliza',
                                 icon: '',
-                                routerLink: ['/Payment']
+                                routerLink: ['/page/add-payment']
                             },
                             {
                                 label: 'Historico de pagos',
                                 icon: '',
-                                routerLink: ['/Payment']
+                                routerLink: ['/page/payment-history']
                             }
                         ]
                     }
@@ -286,12 +285,12 @@ export class AppMenu {
                     {
                         label: 'Contacto',
                         icon: 'pi pi-fw pi-headphones',
-                        routerLink: ['/documentation']
+                        routerLink: ['/page/contact']
                     },
                     {
                         label: 'Reporte de errores',
                         icon: 'pi pi-fw pi-wrench',
-                        routerLink: ['/documentation']
+                        routerLink: ['/page/documentation']
                     }
                 ]
             },

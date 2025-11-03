@@ -1,3 +1,10 @@
+.error {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #f89420;
+    display: flex;
+    flex-direction: row-reverse;
+}
 .p-button {
     display: inline-flex;
     position: relative;
@@ -23,4 +30,7 @@
 .p-button:hover {
     background: var(--color-secondary-blue);
     border-color: var(--color-secondary-blue);
+}
+.p-inputtext.ng-invalid.ng-dirty {
+    border-color: #f89420;
 }

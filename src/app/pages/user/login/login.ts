@@ -8,11 +8,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AuthService } from '@/core/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, ReactiveFormsModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator],
+    imports: [ButtonModule, ReactiveFormsModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator, CommonModule],
     templateUrl: './login.html',
     styleUrl: './login.scss'
 })
@@ -32,12 +33,16 @@ export class Login {
         private router: Router
     ) {
         this.loginForm = this.fb.group({
-            identifier: ['', [Validators.required]],
+            identifier: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
     }
 
     onSubmit() {
+        this.loginForm.markAllAsTouched();
+        if (this.loginForm.invalid) {
+            return;
+        }
         const { identifier, password } = this.loginForm.value;
 
         const success = this.authService.login(identifier, password);
