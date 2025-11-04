@@ -105,7 +105,6 @@ export class AppMenu {
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user') || '{}');
-        console.log(this.user);
         const fullName = this.user?.name || 'Desconocido Usuario';
         const initials = this.getInitials(fullName);
         this.avatarUrl = AvatarGenerator.generateAvatar(initials.firstName, initials.lastName);

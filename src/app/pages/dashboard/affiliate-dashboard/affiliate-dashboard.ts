@@ -4,10 +4,11 @@ import { RecentSalesWidget } from '../components/recentsaleswidget';
 import { BestSellingWidget } from '../components/bestsellingwidget';
 import { RevenueStreamWidget } from '../components/revenuestreamwidget';
 import { CarouselTab } from '../components/carousel-tab/carousel-tab';
+import { DigitalId } from '@/pages/dependent-affiliates/digital-id/digital-id';
 
 @Component({
     selector: 'app-affiliate-dashboard',
-    imports: [Statswidget],
+    imports: [Statswidget, DigitalId],
     templateUrl: './affiliate-dashboard.html',
     styleUrl: './affiliate-dashboard.scss'
 })
@@ -16,6 +17,5 @@ export class AffiliateDashboard {
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user') || '{}');
-        console.log(this.user);
     }
 }
