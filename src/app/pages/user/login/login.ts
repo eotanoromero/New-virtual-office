@@ -33,24 +33,29 @@ export class Login {
         private router: Router
     ) {
         this.loginForm = this.fb.group({
-            identifier: ['', [Validators.required, Validators.email]],
+            identifier: ['', [Validators.required]],
             password: ['', Validators.required]
         });
     }
 
+    // Modificación en el Componente:
     onSubmit() {
         this.loginForm.markAllAsTouched();
         if (this.loginForm.invalid) {
             return;
         }
+
         const { identifier, password } = this.loginForm.value;
 
-        const success = this.authService.login(identifier, password);
-
-        if (!success) {
-            this.errorMessage = 'Código o contraseña incorrectos';
-        }
+        this.authService.login(identifier, password).subscribe((success) => {
+            if (success) {
+                this.router.navigate(['/dashboard']);
+            } else {
+                this.errorMessage = 'Código o contraseña incorrectos';
+            }
+        });
     }
+
     register() {
         this.router.navigate(['user/register']);
     }

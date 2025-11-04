@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "https://arsmovil.arsreservas.com:9443",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": { "^/api": "" }
+  }
+}
