@@ -19,9 +19,9 @@ import { CapitalizePipe } from '@/shared/pipes/capitalize-pipe';
                 <div class="card mb-4" style="background-color: #f1f5f9; padding: 1rem; #ffffff: red; cursor: pointer;" (click)="toggleProfileMenu()">
                     <div class="flex align-items-center justify-content-between user-profile">
                         <div class="flex align-items-center">
-                            <img [src]="avatarUrl" alt="Avatar del usuario" class="layout-menu me-2" width="36" height="36" />
+                            <img [src]="avatarUrl" alt="Avatar del usuario" class="layout-menu me-2" width="30" height="30" />
                             <div>
-                                <span class="block font-medium mb-1" style="color:#264E72; font-size:14px">{{ shortUserName }}</span>
+                                <span class="block font-medium mb-1" style="color:#264E72; font-size:15px">{{ shortUserName | capitalize }}</span>
                                 <span class="block" style="color:#264E72; font-size:13px;">{{ user.details.Tipo | capitalize }}</span>
                             </div>
                         </div>

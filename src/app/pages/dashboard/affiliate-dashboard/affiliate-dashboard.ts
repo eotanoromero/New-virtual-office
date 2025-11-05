@@ -4,11 +4,10 @@ import { RecentSalesWidget } from '../components/recentsaleswidget';
 import { BestSellingWidget } from '../components/bestsellingwidget';
 import { RevenueStreamWidget } from '../components/revenuestreamwidget';
 import { CarouselTab } from '../components/carousel-tab/carousel-tab';
-import { DigitalId } from '@/pages/dependent-affiliates/digital-id/digital-id';
 
 @Component({
     selector: 'app-affiliate-dashboard',
-    imports: [Statswidget, DigitalId],
+    imports: [Statswidget],
     templateUrl: './affiliate-dashboard.html',
     styleUrl: './affiliate-dashboard.scss'
 })

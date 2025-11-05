@@ -1,76 +1,35 @@
-<!-- <div class="col-span-12 lg:col-span-6 xl:col-span-3">
-    <div class="card mb-0">
+@for (card of statsCards; track card.title) {
+<div class="col-span-12 lg:col-span-6 xl:col-span-3">
+    <div class="card mb-0 h-full flex flex-col">
         <div class="flex justify-between mb-4">
             <div>
-                <span class="block text-muted-color font-medium mb-4">Tus consumos</span>
-                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl"><span style="font-size: 12px">Consumido: $ </span>{{consumo?.Disponible?.Consumido}}</div>
-                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl"><span style="font-size: 12px">Disponible: $ </span>{{consumo?.Disponible?.Disponible}}</div>
+                <span class="block text-muted-color font-medium mb-4" [style.font-size.rem]="1">{{ card.title }}</span>
+                @if (card.loading) {
+                <div class="text-surface-500 dark:text-surface-400 font-medium text-xl" style="color: #264e72">Cargando...</div>
+                } @else {
+                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl" style="color: #f89420">{{ card.value }}</div>
+                }
             </div>
-            <div class="flex items-center justify-center rounded-border" style="width: 2.5rem; height: 2.5rem; background-color: #b3d4e5">
-                <i class="pi pi-dollar" style="color: #00558c; font-size: 1.25rem"></i>
-            </div>
-        </div>
-         <span class="text-primary font-medium">%52+ </span>
-        <span class="text-muted-color">since last week</span> 
-    </div>
-</div> -->
-<div class="col-span-12 lg:col-span-6 xl:col-span-3">
-    <div class="card mb-0">
-        <div class="flex justify-between mb-4">
-            <!-- <div>
-                <span class="block text-muted-color font-medium mb-4">Revenue</span>
-                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">$2.100</div>
-            </div> -->
-            <div class="flex items-center justify-center rounded-border" style="width: 2.5rem; height: 2.5rem; background-color: #ffe2b3">
-                <i class="pi pi-users" style="color: #ff9e1b; font-size: 1.25rem"></i>
+
+            <div class="flex items-center justify-center rounded-border" [style.width.rem]="2.5" [style.height.rem]="2.5" [style.background-color]="'#f1f7fa'">
+                <i [class]="'pi ' + card.icon" [style.color]="'#264E72'" [style.font-size.rem]="1.25"></i>
             </div>
         </div>
-        <!-- <span class="text-primary font-medium">%52+ </span>
-        <span class="text-muted-color">since last week</span> -->
-    </div>
-</div>
-<div class="col-span-12 lg:col-span-6 xl:col-span-3">
-    <div class="card mb-0">
-        <div class="flex justify-between mb-4">
-            <!-- <div>
-                <span class="block text-muted-color font-medium mb-4">Revenue</span>
-                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">$2.100</div>
-            </div> -->
-            <div class="flex items-center justify-center rounded-border" style="width: 2.5rem; height: 2.5rem; background-color: #ffe2b3">
-                <i class="pi pi-users" style="color: #ff9e1b; font-size: 1.25rem"></i>
+
+        <!-- @if (card.title === 'Consumido') {
+        <div class="flex flex-col items-center justify-center mt-2 flex-grow">
+            <div class="chart-container">
+                <p-chart type="doughnut" [data]="data" [options]="options" />
+            </div>
+            <div class="text-center mt-2">
+                <span class="text-primary font-medium">{{ getConsumptionPercentage() | number:'1.0-0' }}%</span>
             </div>
         </div>
-        <!-- <span class="text-primary font-medium">%52+ </span>
-        <span class="text-muted-color">since last week</span> -->
+        } @else {
+        <div class="flex-grow"></div>
+        } -->
+
+        <!-- <span class="text-muted-color text-sm mt-2 block text-center">{{ card.trend }}</span> -->
     </div>
 </div>
-<div class="col-span-12 lg:col-span-6 xl:col-span-3">
-    <div class="card mb-0">
-        <div class="flex justify-between mb-4">
-            <!-- <div>
-                <span class="block text-muted-color font-medium mb-4">Customers</span>
-                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">28441</div>
-            </div> -->
-            <div class="flex items-center justify-center rounded-border" style="width: 2.5rem; height: 2.5rem; background-color: #b9e8fb">
-                <i class="pi pi-chart-line" style="color: #00aef0; font-size: 1.25rem"></i>
-            </div>
-        </div>
-        <!-- <span class="text-primary font-medium">520 </span>
-        <span class="text-muted-color">newly registered</span> -->
-    </div>
-</div>
-<div class="col-span-12 lg:col-span-6 xl:col-span-3">
-    <div class="card mb-0">
-        <div class="flex justify-between mb-4">
-            <!-- <div>
-                <span class="block text-muted-color font-medium mb-4">Comments</span>
-                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">152 Unread</div>
-            </div> -->
-            <div class="flex items-center justify-center rounded-border" style="width: 2.5rem; height: 2.5rem; background-color: #d4d5d7">
-                <i class="pi pi-cog" style="color: #00558c; font-size: 1.25rem"></i>
-            </div>
-        </div>
-        <!-- <span class="text-primary font-medium">85 </span>
-        <span class="text-muted-color">responded</span> -->
-    </div>
-</div>
+}
