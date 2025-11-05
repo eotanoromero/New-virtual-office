@@ -6,22 +6,23 @@ import { AppMenuitem } from './app.menuitem';
 import { HasRoleDirective } from '@/shared/directive/has-role.directive';
 import { Profile } from '@/shared/enum/profile.enum';
 import { AvatarGenerator } from '../../shared/helper/avatar_helper';
+import { CapitalizePipe } from '@/shared/pipes/capitalize-pipe';
 
 @Component({
     selector: 'app-menu',
     standalone: true,
-    imports: [CommonModule, AppMenuitem, RouterModule, HasRoleDirective],
+    imports: [CommonModule, AppMenuitem, RouterModule, HasRoleDirective, CapitalizePipe],
     template: `
         <ul class="layout-menu" *hasRole="[Profile.AFFILIATE]">
              
-            <li class="mt-4 mb-0 layout-root-menuitem" [ngClass]="{ 'active-menuitem': isProfileMenuOpen }">
+            <li class="mt-0 mb-0 layout-root-menuitem" [ngClass]="{ 'active-menuitem': isProfileMenuOpen }">
                 <div class="card mb-4" style="background-color: #f1f5f9; padding: 1rem; #ffffff: red; cursor: pointer;" (click)="toggleProfileMenu()">
                     <div class="flex align-items-center justify-content-between user-profile">
                         <div class="flex align-items-center">
                             <img [src]="avatarUrl" alt="Avatar del usuario" class="layout-menu me-2" width="36" height="36" />
                             <div>
-                                <span class="block font-medium mb-1" style="color:#264E72; font-size:14px">{{ user.name }}</span>
-                                <span class="block" style="color:#264E72; font-size:13px">{{ user.code }}</span>
+                                <span class="block font-medium mb-1" style="color:#264E72; font-size:14px">{{ shortUserName }}</span>
+                                <span class="block" style="color:#264E72; font-size:13px;">{{ user.details.Tipo | capitalize }}</span>
                             </div>
                         </div>
                         <i [ngClass]="{ 'pi-angle-down': !isProfileMenuOpen, 'pi-angle-up': isProfileMenuOpen }" class="pi pi-fw" style="color: #264E72; margin-left: auto; margin-top:13px"></i>
@@ -102,11 +103,14 @@ export class AppMenu {
     isProfileMenuOpen: boolean = false;
     model: MenuItem[] = [];
     modelAdmin: MenuItem[] = [];
+    shortUserName: string = '';
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user') || '{}');
+        console.log('User in menu:', this.user.details.Descripcion);
         const fullName = this.user?.name || 'Desconocido Usuario';
-        const initials = this.getInitials(fullName);
+        this.shortUserName = this.getShortName(fullName);
+        const initials = this.getInitials(this.shortUserName);
         this.avatarUrl = AvatarGenerator.generateAvatar(initials.firstName, initials.lastName);
 
         this.model = [
@@ -314,14 +318,32 @@ export class AppMenu {
     toggleProfileMenu() {
         this.isProfileMenuOpen = !this.isProfileMenuOpen;
     }
+
     /**
      * @param fullName
      * @returns
      */
+
     private getInitials(fullName: string): { firstName: string; lastName: string } {
         const nameParts = fullName.trim().split(' ');
         const firstName = nameParts[0]?.charAt(0) || 'D';
         const lastName = nameParts[nameParts.length - 1]?.charAt(0) || 'U';
         return { firstName, lastName };
+    }
+
+    private getShortName(fullName: string): string {
+        if (!fullName) return '';
+
+        const nameParts = fullName.trim().split(/\s+/);
+
+        const firstName = nameParts[0] || '';
+
+        const secondPart = nameParts.length > 1 ? nameParts[1] : '';
+
+        if (firstName && secondPart) {
+            return `${firstName} ${secondPart}`;
+        }
+
+        return firstName;
     }
 }

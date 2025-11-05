@@ -23,7 +23,7 @@ export class AvatarGenerator {
 
         // Iniciales
         const initials = `${name.charAt(0).toUpperCase()}${surname.charAt(0).toUpperCase()}`;
-        ctx.font = '600 28px "Poppins", sans-serif';
+        ctx.font = '600 22px "Poppins", sans-serif';
         ctx.fillStyle = '#FFFFFF';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
