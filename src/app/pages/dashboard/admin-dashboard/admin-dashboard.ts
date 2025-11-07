@@ -1,5 +1,4 @@
 import { Component, NgModule } from '@angular/core';
-import { RecentSalesWidget } from '../components/recentsaleswidget';
 import { BestSellingWidget } from '../components/bestsellingwidget';
 import { RevenueStreamWidget } from '../components/revenuestreamwidget';
 import { Statswidget } from '../components/statswidget/statswidget';
