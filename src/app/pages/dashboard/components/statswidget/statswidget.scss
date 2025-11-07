@@ -1,0 +1,26 @@
+:host ::ng-deep .text-muted-color {
+    color: #264e72;
+}
+
+:host ::ng-deep .chart-container {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    overflow: visible !important; // 👈 clave
+    canvas {
+        max-width: 120px !important;
+        max-height: 120px !important;
+    }
+}
+
+// Asegurar que todos los cards tengan la misma altura
+// :host ::ng-deep .card {
+//     min-height: 200px;
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// Mejorar el color del texto primario usando la paleta
+:host ::ng-deep .text-primary {
+    color: #00aef0 !important;
+}

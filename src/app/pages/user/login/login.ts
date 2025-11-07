@@ -8,11 +8,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AuthService } from '@/core/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, ReactiveFormsModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator],
+    imports: [ButtonModule, ReactiveFormsModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator, CommonModule],
     templateUrl: './login.html',
     styleUrl: './login.scss'
 })
@@ -37,15 +38,24 @@ export class Login {
         });
     }
 
+    // Modificación en el Componente:
     onSubmit() {
+        this.loginForm.markAllAsTouched();
+        if (this.loginForm.invalid) {
+            return;
+        }
+
         const { identifier, password } = this.loginForm.value;
 
-        const success = this.authService.login(identifier, password);
-
-        if (!success) {
-            this.errorMessage = 'Código o contraseña incorrectos';
-        }
+        this.authService.login(identifier, password).subscribe((success) => {
+            if (success) {
+                this.router.navigate(['/dashboard']);
+            } else {
+                this.errorMessage = 'Código o contraseña incorrectos';
+            }
+        });
     }
+
     register() {
         this.router.navigate(['user/register']);
     }

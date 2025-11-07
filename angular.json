@@ -32,7 +32,9 @@
                             }
                         ],
                         "styles": [
-                            "src/assets/styles.scss"
+                            "src/assets/styles.scss",
+                            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+
                         ],
                         "scripts": []
                     },
@@ -50,6 +52,9 @@
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "proxyConfig": "src/proxy.conf.json"
+                    },
                     "configurations": {
                         "production": {
                             "buildTarget": "sakai-ng:build:production"
@@ -79,7 +84,9 @@
                             }
                         ],
                         "styles": [
-                            "src/assets/styles.scss"
+                            "src/assets/styles.scss",
+                            "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+
                         ],
                         "scripts": []
                     }

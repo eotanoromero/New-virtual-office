@@ -12,13 +12,24 @@
                     <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Oficina virtual</div>
                     <span class="text-muted-color" style="font-size: 1.1rem">Inicie sesión para continuar.</span>
                 </div>
+
+                @if (errorMessage) {
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+                    <span class="block sm:inline">{{ errorMessage }}</span>
+                </div>
+                }
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div>
-                        <input pInputText id="identifier" formControlName="identifier" required type="text" placeholder="Correo electrónico" class="w-full md:w-120 mb-8" aria-label="Correo electrónico" />
+                        <input pInputText id="identifier" formControlName="identifier" required type="text" placeholder="Correo electrónico" class="w-full md:w-120 mb-2" aria-label="Correo electrónico" />
+                        @if (loginForm.get('identifier')?.hasError('required') && loginForm.get('identifier')?.touched) {
+                        <span class="error"> El correo electrónico es requerido. </span>
+                        } @if (loginForm.get('identifier')?.hasError('email') && loginForm.get('identifier')?.touched) {
+                        <span class="error"> Debe ingresar un correo electrónico válido. </span>
+                        }
 
-                        <p-password id="password" formControlName="password" required placeholder="Contraseña" [toggleMask]="true" class="mb-8 w-full" [fluid]="true" [feedback]="false"> </p-password>
+                        <p-password id="password" formControlName="password" required placeholder="Contraseña" [toggleMask]="true" class="mt-8 w-full" [fluid]="true" [feedback]="false"> </p-password>
 
-                        <div class="flex items-center justify-between mt-2 mb-8 gap-8">
+                        <div class="flex items-center justify-between mt-8 mb-8 gap-8">
                             <div class="flex items-center">
                                 <p-checkbox id="rememberme1" binary class="mr-2"></p-checkbox>
                                 <label for="rememberme1" class="select-none cursor-pointer">Recordarme</label>

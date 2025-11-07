@@ -1,0 +1,35 @@
+@for (card of statsCards; track card.title) {
+<div class="col-span-12 lg:col-span-6 xl:col-span-3">
+    <div class="card mb-0 h-full flex flex-col">
+        <div class="flex justify-between mb-4">
+            <div>
+                <span class="block text-muted-color font-medium mb-4" [style.font-size.rem]="1">{{ card.title }}</span>
+                @if (card.loading) {
+                <div class="text-surface-500 dark:text-surface-400 font-medium text-xl" style="color: #264e72">Cargando...</div>
+                } @else {
+                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl" style="color: #f89420">{{ card.value }}</div>
+                }
+            </div>
+
+            <div class="flex items-center justify-center rounded-border" [style.width.rem]="2.5" [style.height.rem]="2.5" [style.background-color]="'#f1f7fa'">
+                <i [class]="'pi ' + card.icon" [style.color]="'#264E72'" [style.font-size.rem]="1.25"></i>
+            </div>
+        </div>
+
+        <!-- @if (card.title === 'Monto consumido') {
+        <div class="flex flex-col items-center justify-center mt-2 flex-grow">
+            <div class="chart-container">
+                <p-chart type="doughnut" [data]="data" [options]="options" />
+            </div>
+            <div class="text-center mt-2">
+                <span class="text-primary font-medium">{{ getConsumptionPercentage() | number:'1.0-0' }}%</span>
+            </div>
+        </div>
+        } @else {
+        <div class="flex-grow"></div>
+        } -->
+
+        <!-- <span class="text-muted-color text-sm mt-2 block text-center">{{ card.trend }}</span> -->
+    </div>
+</div>
+}

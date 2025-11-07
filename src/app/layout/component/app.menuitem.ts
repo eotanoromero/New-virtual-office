@@ -16,8 +16,8 @@ import { LayoutService } from '../service/layout.service';
         <ng-container>
             <div *ngIf="root && item.visible !== false" class="layout-menuitem-root-text">{{ item.label }}</div>
             <a *ngIf="(!item.routerLink || item.items) && item.visible !== false" [attr.href]="item.url" (click)="itemClick($event)" [ngClass]="item.styleClass" [attr.target]="item.target" tabindex="0" pRipple>
-                <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-                <span class="layout-menuitem-text">{{ item.label }}</span>
+                <i [ngClass]="getIconClasses(item.icon)" class="layout-menuitem-icon"></i>
+                <span class="layout-menuitem-text" style="">{{ item.label }}</span>
                 <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items"></i>
             </a>
             <a
@@ -38,7 +38,7 @@ import { LayoutService } from '../service/layout.service';
                 tabindex="0"
                 pRipple
             >
-                <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
+                <i [ngClass]="getIconClasses(item.icon)" class="layout-menuitem-icon"></i>
                 <span class="layout-menuitem-text">{{ item.label }}</span>
                 <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items"></i>
             </a>
@@ -111,6 +111,20 @@ export class AppMenuitem {
                 this.updateActiveStateFromRoute();
             }
         });
+    }
+
+    getIconClasses(icon: string | undefined): any {
+        if (!icon) return null;
+
+        if (icon.startsWith('pi')) {
+            return icon.split(' ');
+        }
+
+        if (icon.startsWith('bi')) {
+            return icon.split(' ');
+        }
+
+        return icon;
     }
 
     ngOnInit() {

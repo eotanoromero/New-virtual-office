@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { StatsWidget } from '../components/statswidget';
-import { RecentSalesWidget } from '../components/recentsaleswidget';
+import { Statswidget } from '../components/statswidget/statswidget';
 import { BestSellingWidget } from '../components/bestsellingwidget';
 import { RevenueStreamWidget } from '../components/revenuestreamwidget';
+import { NotificationsWidget } from '../components/notificationswidget';
+import { Authorization } from '../components/authorization';
 
 @Component({
     selector: 'app-affiliate-dashboard',
-    imports: [StatsWidget],
+    imports: [Statswidget, RevenueStreamWidget, Authorization],
     templateUrl: './affiliate-dashboard.html',
     styleUrl: './affiliate-dashboard.scss'
 })
@@ -15,6 +16,5 @@ export class AffiliateDashboard {
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user') || '{}');
-        console.log(this.user);
     }
 }

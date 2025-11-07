@@ -18,15 +18,15 @@ import { LayoutService } from '../service/layout.service';
             <a class="layout-topbar-logo" routerLink="/">
                 <img src="short.png" alt="Perfil" class="p-2 object-fit-cover logotype" style="width: 55px; height:55px;" />
 
-                <span style="font-size: 14px;">ARS RESERVAS</span>
+                <span style="font-size: 20px; color: #264E72">ARS RESERVAS</span>
             </a>
         </div>
 
         <div class="layout-topbar-actions">
             <div class="layout-config-menu">
-                <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
+                <!-- <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
                     <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
-                </button>
+                </button> -->
                 <div class="relative">
                     <button
                         class="layout-topbar-action layout-topbar-action-highlight"
