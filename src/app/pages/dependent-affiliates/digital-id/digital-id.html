@@ -1,1 +1,67 @@
-<p>digital-id works!</p>
+<div class="digital-id-container">
+    <div class="header">
+        <h2>Carné Digital</h2>
+        <p>Gestiona los carnés de tu núcleo familiar</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Cargando carnés...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && (!dependientes || dependientes.length === 0)" class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h3>No se encontraron carnés</h3>
+        <p>No hay información disponible en este momento</p>
+    </div>
+
+    <!-- Cards Grid -->
+    <div *ngIf="!isLoading && dependientes && dependientes.length > 0" class="cards-grid">
+        <div *ngFor="let persona of dependientes" class="carne-card">
+            <!-- Card Header -->
+            <div class="card-header">
+                <div class="logo-section">
+                    <div class="bank-info">
+                        <span class="bank-name">ARS RESERVAS</span>
+                    </div>
+                </div>
+                <div class="card-type">ARS</div>
+            </div>
+
+            <!-- Orange Divider -->
+            <div class="orange-divider"></div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="profile-section">
+                    <div class="avatar">{{ getInitials(persona.nombre) }}</div>
+                    <div class="personal-info">
+                        <h3 class="name">{{ persona.nombre }}</h3>
+                        <span class="relationship" [class.titular]="persona.parentesco === 'TITULAR'"> {{ persona.parentesco }} </span>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="detail-row">
+                        <span class="label">Código Empleado:</span>
+                        <span class="value">{{ persona.cod_emp }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Código Persona:</span>
+                        <span class="value">{{ persona.cdperson }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="card-footer">
+                <button class="download-btn" (click)="downloadCarne(persona)">
+                    <span class="icon">⬇</span>
+                    Descargar Carné
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

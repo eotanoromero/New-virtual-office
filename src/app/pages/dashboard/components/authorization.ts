@@ -12,7 +12,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
     imports: [CommonModule, ButtonModule, RippleModule, CapitalizePipe],
     template: `
         <div class="authorization-widget">
-            <!-- Header más compacto -->
             <div class="widget-header">
                 <div class="header-left">
                     <i class="pi pi-check-circle"></i>
@@ -25,7 +24,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 </div>
             </div>
 
-            <!-- Loading -->
             <div *ngIf="isLoading" class="cards-container">
                 <div class="auth-card skeleton" *ngFor="let i of [1, 2]">
                     <div class="skeleton-line header"></div>
@@ -34,11 +32,9 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 </div>
             </div>
 
-            <!-- Cards Container -->
             <div *ngIf="!isLoading && autorizaciones.length > 0" class="cards-wrapper">
                 <div class="cards-slider" [style.transform]="'translateX(-' + currentIndex * (100 / visibleCards) + '%)'">
                     <div class="auth-card" *ngFor="let aut of autorizaciones" [style.flex]="'0 0 calc(100% / ' + visibleCards + ' - 0.75rem)'">
-                        <!-- Card Header Simplificado -->
                         <div class="card-top">
                             <div class="status-tag">
                                 <i class="pi pi-check-circle"></i>
@@ -47,7 +43,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                             <span class="auth-number">#{{ aut.AUTORIZACION || 'N/A' }}</span>
                         </div>
 
-                        <!-- Card Content -->
                         <div class="card-content">
                             <div class="info-item">
                                 <i class="pi pi-calendar icon-calendar"></i>
@@ -74,7 +69,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                             </div>
                         </div>
 
-                        <!-- Footer simple -->
                         <div class="card-footer">
                             <button pButton label="Ver Detalles" class="p-button-text p-button-sm" (click)="viewDetails(aut)"></button>
                         </div>
@@ -82,7 +76,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 </div>
             </div>
 
-            <!-- Empty State -->
             <div *ngIf="!isLoading && autorizaciones.length === 0" class="empty-box">
                 <i class="pi pi-inbox"></i>
                 <p>No hay autorizaciones disponibles</p>

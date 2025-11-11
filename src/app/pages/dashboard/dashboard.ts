@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
-import { Profile } from '@/shared/enum/profile.enum';
-
+import { CommonModule } from '@angular/common';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { AffiliateDashboard } from './affiliate-dashboard/affiliate-dashboard';
-import { HasRoleDirective } from '../../shared/directive/has-role.directive';
-import { AppLayout } from '@/layout/component/app.layout';
+import { HasRoleDirective } from '@/shared/directive/has-role.directive';
+import { Profile } from '@/shared/enum/profile.enum';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [AppLayout],
-    template: ` <app-layout> </app-layout> `
+    standalone: true,
+    imports: [CommonModule, AdminDashboard, AffiliateDashboard, HasRoleDirective],
+    template: `
+        <app-admin-dashboard *hasRole="[Profile.ADMIN]"></app-admin-dashboard>
+        <app-affiliate-dashboard *hasRole="[Profile.AFFILIATE]"></app-affiliate-dashboard>
+    `
 })
-export class Dashboard {}
+export class Dashboard {
+    Profile = Profile;
+}

@@ -1,3 +1,4 @@
+import { AppLayout } from '@/layout/component/app.layout';
 import { AuthGuard } from '@/shared/guards/AuthGuard';
 import { Routes } from '@angular/router';
 
@@ -9,6 +10,7 @@ export const appRoutes: Routes = [
     },
     {
         path: '',
+        component: AppLayout,
         canActivate: [AuthGuard],
         children: [
             {
@@ -21,7 +23,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./app/pages/user/user-module').then((m) => m.UserModule),
                 pathMatch: 'full'
             },
-
             {
                 path: 'dashboard',
                 loadChildren: () => import('./app/pages/dashboard/dashboard-module').then((m) => m.DashboardModule)
