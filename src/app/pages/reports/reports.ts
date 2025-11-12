@@ -123,7 +123,7 @@ export class Reports implements OnInit {
                     break;
             }
 
-            alert(`✅ Reporte "${reportType?.title}" generado exitosamente`);
+            alert(`Reporte "${reportType?.title}" generado exitosamente`);
         } catch (error) {
             console.error('Error al generar el reporte:', error);
             alert('Error al generar el reporte. Por favor, intenta nuevamente.');

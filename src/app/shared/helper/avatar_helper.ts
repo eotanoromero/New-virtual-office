@@ -14,7 +14,7 @@ export class AvatarGenerator {
         }
 
         // Colores predefinidos
-        const colors = ['#063452', '#063452', '#063452'];
+        const colors = ['#00AEF0', '#00AEF0', '#00AEF0'];
         const colorIndex = AvatarGenerator.hashCode(name + surname) % colors.length;
         const consistentColor = colors[Math.abs(colorIndex)];
 

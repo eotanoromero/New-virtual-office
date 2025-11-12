@@ -1,17 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subject, forkJoin, of } from 'rxjs';
+import { catchError, takeUntil, finalize } from 'rxjs/operators';
 import { StatsService } from './services/stats.service';
 import { ChartModule } from 'primeng/chart';
 
+// ==================== INTERFACES ====================
+interface User {
+    details: {
+        Cdperson: string;
+        Codigo: string;
+        Ramo: string;
+        Fecha: string;
+    };
+}
+
+interface MedicineAvailability {
+    Disponible: {
+        Consumido: string;
+        Disponible: string;
+    };
+}
+
+interface Dependent {
+    parentesco: string;
+    [key: string]: any;
+}
+
+interface Authorization {
+    [key: string]: any;
+}
+
 interface StatCard {
+    id: string;
     title: string;
     value: string;
     icon: string;
     colorClass: string;
-    trend?: string;
-    loading?: boolean;
+    trend: string;
+    loading: boolean;
+    error: boolean;
 }
 
+enum StatCardId {
+    CONSUMED = 'consumed',
+    AVAILABLE = 'available',
+    AUTHORIZATIONS = 'authorizations',
+    DEPENDENTS = 'dependents'
+}
+
+// ==================== COMPONENT ====================
 @Component({
     selector: 'app-statswidget',
     standalone: true,
@@ -19,126 +57,217 @@ interface StatCard {
     templateUrl: './statswidget.html',
     styleUrls: ['./statswidget.scss']
 })
-export class Statswidget implements OnInit {
-    consumo: any = null;
-    dependientes: any = null;
-    autorizaciones: any = null;
+export class Statswidget implements OnInit, OnDestroy {
+    // ==================== PROPERTIES ====================
+    private destroy$ = new Subject<void>();
+    private readonly STORAGE_KEY = 'user';
 
-    isLoading: boolean = true;
+    // Data properties
+    consumo: MedicineAvailability | null = null;
+    dependientes: Dependent[] = [];
+    autorizaciones: Authorization[] = [];
 
-    // Datos y opciones del gráfico doughnut
-    data: any;
-    options: any;
+    // Chart properties
+    chartData: any;
+    chartOptions: any;
 
+    // Stats cards
     statsCards: StatCard[] = [
         {
+            id: StatCardId.CONSUMED,
             title: 'Monto consumido',
-            value: '$0.00',
+            value: 'RD$ 0.00',
             icon: 'bi bi-prescription2',
             colorClass: 'stat-orange',
             trend: 'Hasta la fecha',
-            loading: true
+            loading: true,
+            error: false
         },
         {
+            id: StatCardId.AVAILABLE,
             title: 'Monto disponible',
-            value: '$0.00',
+            value: 'RD$ 0.00',
             icon: 'bi bi-coin',
             colorClass: 'stat-blue',
             trend: 'Saldo restante',
-            loading: true
+            loading: true,
+            error: false
         },
-
         {
+            id: StatCardId.AUTHORIZATIONS,
             title: 'Autorizaciones',
             value: '0',
             icon: 'pi-check-circle',
             colorClass: 'stat-green',
-            trend: 'Activos',
-            loading: true
+            trend: 'Activas',
+            loading: true,
+            error: false
         },
         {
+            id: StatCardId.DEPENDENTS,
             title: 'Dependientes',
             value: '0',
             icon: 'pi-users',
             colorClass: 'stat-dark',
             trend: 'Núcleo familiar',
-            loading: true
+            loading: true,
+            error: false
         }
     ];
 
-    constructor(private statsService: StatsService) {}
+    constructor(private statsService: StatsService) {
+        this.initializeChart();
+    }
 
+    // ==================== LIFECYCLE HOOKS ====================
     ngOnInit(): void {
-        const storedValue = localStorage.getItem('user');
+        this.loadUserData();
+    }
 
-        if (!storedValue) {
-            console.warn('No se encontró el usuario en localStorage');
-            this.isLoading = false;
-            this.updateStatsAsError();
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    // ==================== DATA LOADING ====================
+    private loadUserData(): void {
+        const user = this.getUserFromStorage();
+
+        if (!user) {
+            this.handleStorageError();
+            return;
+        }
+
+        this.loadAllStats(user);
+    }
+
+    private getUserFromStorage(): User | null {
+        try {
+            const storedValue = localStorage.getItem(this.STORAGE_KEY);
+
+            if (!storedValue) {
+                console.warn('No se encontró el usuario en localStorage');
+                return null;
+            }
+
+            return JSON.parse(storedValue) as User;
+        } catch (error) {
+            console.error('Error al parsear el usuario:', error);
+            return null;
+        }
+    }
+
+    private loadAllStats(user: User): void {
+        const { Cdperson, Codigo, Ramo, Fecha } = user.details;
+
+        // Cargar todas las estadísticas en paralelo
+        forkJoin({
+            medicine: this.statsService.getMedicineAvailabily(Cdperson, Ramo, Fecha).pipe(
+                catchError((err) => {
+                    console.error('Error al obtener disponibilidad de medicina:', err);
+                    return of(null);
+                })
+            ),
+            dependents: this.statsService.getDependents(Codigo).pipe(
+                catchError((err) => {
+                    console.error('Error al obtener dependientes:', err);
+                    return of([]);
+                })
+            ),
+            authorizations: this.statsService.getAuthorizations(Codigo).pipe(
+                catchError((err) => {
+                    console.error('Error al obtener autorizaciones:', err);
+                    return of({ Table: [] });
+                })
+            )
+        })
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (results) => {
+                    this.consumo = results.medicine;
+                    this.dependientes = Array.isArray(results.dependents) ? results.dependents : [];
+                    this.autorizaciones = results.authorizations?.Table || [];
+
+                    this.updateAllCards();
+                },
+                error: (err) => {
+                    console.error('Error al cargar las estadísticas:', err);
+                    this.handleLoadingError();
+                }
+            });
+    }
+
+    // ==================== CARD UPDATES ====================
+    private updateAllCards(): void {
+        this.updateMedicineCards();
+        this.updateDependentsCard();
+        this.updateAuthorizationsCard();
+    }
+
+    private updateMedicineCards(): void {
+        const consumedCard = this.getCardById(StatCardId.CONSUMED);
+        const availableCard = this.getCardById(StatCardId.AVAILABLE);
+
+        if (!this.consumo?.Disponible) {
+            this.setCardError(consumedCard);
+            this.setCardError(availableCard);
             return;
         }
 
         try {
-            const user = JSON.parse(storedValue);
-            const codigo = user.details.Cdperson;
-            const code_emp = user.details.Codigo;
-            const ramo = user.details.Ramo;
-            const fecha = user.details.Fecha;
-            this.getMedicineAvailabily(codigo, ramo, fecha);
-            this.getDependents(code_emp);
-            this.getAuthorizations(code_emp);
+            const consumido = this.parseAmount(this.consumo.Disponible.Consumido);
+            const disponible = this.parseAmount(this.consumo.Disponible.Disponible);
+
+            consumedCard.value = `RD$ ${this.formatCurrency(consumido)}`;
+            consumedCard.loading = false;
+            consumedCard.error = false;
+
+            availableCard.value = `RD$ ${this.formatCurrency(disponible)}`;
+            availableCard.loading = false;
+            availableCard.error = false;
+
+            this.updateChart(consumido, disponible);
         } catch (error) {
-            console.error('Error al parsear el usuario:', error);
-            this.isLoading = false;
-            this.updateStatsAsError();
+            console.error('Error al procesar datos de medicina:', error);
+            this.setCardError(consumedCard);
+            this.setCardError(availableCard);
         }
-
-        this.setupChart(0, 0);
     }
 
-    getMedicineAvailabily(codigo: string, ramo: string, fecha: string): void {
-        this.statsService.getMedicineAvailabily(codigo, ramo, fecha).subscribe({
-            next: (data) => {
-                this.consumo = data;
-                this.updateStatsCards();
-                this.isLoading = false;
-            },
-            error: (err) => {
-                console.error('Error en la petición:', err);
-                this.isLoading = false;
-                this.updateStatsAsError();
-            }
-        });
+    private updateDependentsCard(): void {
+        const card = this.getCardById(StatCardId.DEPENDENTS);
+
+        try {
+            const count = this.dependientes.filter((dep) => dep.parentesco !== 'TITULAR').length;
+            card.value = count.toString();
+            card.loading = false;
+            card.error = false;
+        } catch (error) {
+            console.error('Error al procesar dependientes:', error);
+            this.setCardError(card);
+        }
     }
 
-    public updateStatsCards(): void {
-        if (!this.consumo?.Disponible) return;
+    private updateAuthorizationsCard(): void {
+        const card = this.getCardById(StatCardId.AUTHORIZATIONS);
 
-        const consumido = parseFloat(this.consumo.Disponible.Consumido);
-        const disponible = parseFloat(this.consumo.Disponible.Disponible);
-
-        // Actualizar card de Consumido
-        this.statsCards[0].value = `RD$ ${this.formatCurrency(consumido)}`;
-        this.statsCards[0].loading = false;
-
-        // Actualizar card de Disponible
-        this.statsCards[1].value = `RD$ ${this.formatCurrency(disponible)}`;
-        this.statsCards[1].loading = false;
-
-        // Actualizar gráfico
-        this.setupChart(consumido, disponible);
-
-        // NO tocar los demás cards aquí - cada uno se actualiza con su propio método
+        try {
+            card.value = this.autorizaciones.length.toString();
+            card.loading = false;
+            card.error = false;
+        } catch (error) {
+            console.error('Error al procesar autorizaciones:', error);
+            this.setCardError(card);
+        }
     }
 
-    private setupChart(consumido: number, disponible: number): void {
-        const self = this;
-
-        this.data = {
+    // ==================== CHART ====================
+    private initializeChart(): void {
+        this.chartData = {
             labels: ['Consumido', 'Disponible'],
             datasets: [
                 {
-                    data: [consumido, disponible],
+                    data: [0, 0],
                     backgroundColor: ['#F89420', '#00AEF0'],
                     hoverBackgroundColor: ['#ffa940', '#33bff5'],
                     borderWidth: 2,
@@ -147,7 +276,7 @@ export class Statswidget implements OnInit {
             ]
         };
 
-        this.options = {
+        this.chartOptions = {
             cutout: '70%',
             layout: {
                 padding: 10
@@ -158,10 +287,16 @@ export class Statswidget implements OnInit {
                 },
                 tooltip: {
                     enabled: true,
-                    external: undefined,
                     position: 'nearest',
                     intersect: false,
-                    usePointStyle: true
+                    usePointStyle: true,
+                    callbacks: {
+                        label: (context: any) => {
+                            const label = context.label || '';
+                            const value = this.formatCurrency(context.parsed);
+                            return `${label}: RD$ ${value}`;
+                        }
+                    }
                 }
             },
             responsive: true,
@@ -169,74 +304,71 @@ export class Statswidget implements OnInit {
         };
     }
 
-    private updateStatsAsError(): void {
+    private updateChart(consumido: number, disponible: number): void {
+        this.chartData = {
+            ...this.chartData,
+            datasets: [
+                {
+                    ...this.chartData.datasets[0],
+                    data: [consumido, disponible]
+                }
+            ]
+        };
+    }
+
+    // ==================== UTILITY METHODS ====================
+    private getCardById(id: string): StatCard {
+        const card = this.statsCards.find((c) => c.id === id);
+        if (!card) {
+            throw new Error(`Card with id ${id} not found`);
+        }
+        return card;
+    }
+
+    private setCardError(card: StatCard): void {
+        card.loading = false;
+        card.error = true;
+        card.value = 'N/A';
+        card.trend = 'Error al cargar';
+    }
+
+    private handleStorageError(): void {
+        this.statsCards.forEach((card) => this.setCardError(card));
+    }
+
+    private handleLoadingError(): void {
         this.statsCards.forEach((card) => {
-            card.loading = false;
-            card.value = 'N/A';
-            card.trend = 'Error al cargar';
+            if (card.loading) {
+                this.setCardError(card);
+            }
         });
     }
 
-    private formatCurrency(value: any): string {
-        if (!value) return '0.00';
+    private parseAmount(value: string | number): number {
         const num = typeof value === 'string' ? parseFloat(value) : value;
-        return num.toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return isNaN(num) ? 0 : num;
     }
 
+    private formatCurrency(value: number | string): string {
+        const num = this.parseAmount(value);
+        return num.toLocaleString('es-DO', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    // ==================== PUBLIC COMPUTED PROPERTIES ====================
     getConsumptionPercentage(): number {
         if (!this.consumo?.Disponible) return 0;
-        const total = parseFloat(this.consumo.Disponible.Consumido) + parseFloat(this.consumo.Disponible.Disponible);
-        if (total === 0) return 0;
-        return (parseFloat(this.consumo.Disponible.Consumido) / total) * 100;
+
+        const consumido = this.parseAmount(this.consumo.Disponible.Consumido);
+        const disponible = this.parseAmount(this.consumo.Disponible.Disponible);
+        const total = consumido + disponible;
+
+        return total === 0 ? 0 : (consumido / total) * 100;
     }
 
-    trackByFn(index: number, card: StatCard): string {
-        return card.title;
-    }
-    getDependents(codigo: string): void {
-        this.statsService.getDependents(codigo).subscribe({
-            next: (data) => {
-                this.dependientes = data;
-                this.updateDependentsCard();
-            },
-            error: (err) => {
-                console.error('Error al obtener los dependientes:', err);
-                this.updateStatsAsError();
-            }
-        });
-    }
-
-    updateDependentsCard(): void {
-        if (Array.isArray(this.dependientes)) {
-            const cantidadDependientes = this.dependientes.filter((dep) => dep.parentesco !== 'TITULAR').length;
-
-            this.statsCards[3].value = `${cantidadDependientes}`; // Actualiza el valor con el número de dependientes
-        } else {
-            this.statsCards[3].value = '0'; // Si no hay dependientes o la respuesta es incorrecta
-        }
-        this.statsCards[3].loading = false; // Termina el estado de carga
-    }
-    getAuthorizations(codigo: string): void {
-        this.statsService.getAuthorizations(codigo).subscribe({
-            next: (data) => {
-                this.autorizaciones = data.Table;
-
-                this.updateAutorizationsCard();
-            },
-            error: (err) => {
-                console.error('Error al obtener las autorizaciones:', err);
-                this.autorizaciones = [];
-                this.updateAutorizationsCard();
-            }
-        });
-    }
-    updateAutorizationsCard(): void {
-        if (Array.isArray(this.autorizaciones)) {
-            const cantidadAutorizaciones = this.autorizaciones.length;
-            this.statsCards[2].value = `${cantidadAutorizaciones}`; // Autorizaciones -> índice 2
-        } else {
-            this.statsCards[2].value = '0';
-        }
-        this.statsCards[2].loading = false;
+    trackByCardId(index: number, card: StatCard): string {
+        return card.id;
     }
 }

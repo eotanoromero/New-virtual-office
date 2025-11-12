@@ -6,7 +6,7 @@
     width: 120px;
     height: 120px;
     position: relative;
-    overflow: visible !important; // 👈 clave
+    overflow: visible !important;
     canvas {
         max-width: 120px !important;
         max-height: 120px !important;
@@ -23,4 +23,42 @@
 // Mejorar el color del texto primario usando la paleta
 :host ::ng-deep .text-primary {
     color: #00aef0 !important;
+}
+.spinner-dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #264e72;
+        animation: bounce 1.4s infinite ease-in-out both;
+
+        &:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        &:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        &:nth-child(3) {
+            animation-delay: 0s;
+        }
+    }
+}
+
+@keyframes bounce {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }

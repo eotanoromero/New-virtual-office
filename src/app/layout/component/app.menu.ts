@@ -80,7 +80,7 @@ import { CapitalizePipe } from '@/shared/pipes/capitalize-pipe';
             }
 
             .profile-card {
-                background: linear-gradient(135deg, var(--color-primary) 0%, #1a3a52 100%);
+                background: #264e72;
                 padding: 1.25rem;
                 margin-top: 1rem;
                 border-radius: 12px;

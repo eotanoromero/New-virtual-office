@@ -14,7 +14,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
         <div class="authorization-widget">
             <div class="widget-header">
                 <div class="header-left">
-                    <i class="pi pi-check-circle"></i>
                     <h3>Autorizaciones Recientes</h3>
                 </div>
                 <div class="header-right">
@@ -37,7 +36,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                     <div class="auth-card" *ngFor="let aut of autorizaciones" [style.flex]="'0 0 calc(100% / ' + visibleCards + ' - 0.75rem)'">
                         <div class="card-top">
                             <div class="status-tag">
-                                <i class="pi pi-check-circle"></i>
                                 <span>Autorizado</span>
                             </div>
                             <span class="auth-number">#{{ aut.AUTORIZACION || 'N/A' }}</span>
@@ -137,7 +135,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
 
             .page-info {
                 font-size: 0.813rem;
-                color: #6b7280;
+                color: #264e72;
                 font-weight: 500;
                 min-width: 60px;
                 text-align: center;
@@ -174,7 +172,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
 
             // Card Top - versión más suave
             .card-top {
-                // background: #264e72;
+                background: #264e72;
                 border: 1px solid #264e72;
                 padding: 0.875rem 1rem;
                 display: flex;
@@ -186,11 +184,11 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 display: inline-flex;
                 align-items: center;
                 gap: 0.375rem;
-                background: #264e72;
+                background: rgb(203 204 205 / 32%);
                 padding: 0.25rem 0.625rem;
                 border-radius: 12px;
                 color: #ffffff;
-                font-size: 0.75rem;
+                font-size: 0.85rem;
                 font-weight: 600;
 
                 i {
@@ -248,17 +246,17 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
 
                 .icon-calendar {
                     background: rgba(0, 174, 240, 0.1);
-                    color: #00aef0;
+                    color: #264e72;
                 }
 
                 .icon-desc {
                     background: rgba(0, 174, 240, 0.1);
-                    color: #00aef0;
+                    color: #264e72;
                 }
 
                 .icon-amount {
                     background: rgba(0, 174, 240, 0.1);
-                    color: #00aef0;
+                    color: #264e72;
                 }
             }
 
@@ -271,15 +269,15 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
             }
 
             .label {
-                font-size: 1.2rem;
+                font-size: 1rem;
                 font-weight: 600;
-                color: #9ca3af;
-                letter-spacing: 0.3px;
+                color: #264e72;
+                letter-spacing: 0.2px;
             }
 
             .value {
                 font-size: 0.99rem;
-                font-weight: 500;
+                font-weight: 400;
                 color: #264e72;
                 word-wrap: break-word;
                 line-height: 1.4;

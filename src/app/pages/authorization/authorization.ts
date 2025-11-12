@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { StatsService } from '../dashboard/components/statswidget/services/stats.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { CapitalizePipe } from '@/shared/pipes/capitalize-pipe';
 
 interface Autorizacion {
     AUTORIZACION: string;
@@ -18,7 +19,7 @@ interface Autorizacion {
 @Component({
     selector: 'app-authorization',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, CapitalizePipe],
     templateUrl: './authorization.html',
     styleUrl: './authorization.scss'
 })
@@ -256,43 +257,5 @@ export class Authorization {
         // Guardar el PDF
         const fechaArchivo = new Date().toISOString().split('T')[0];
         doc.save(`autorizaciones_${fechaArchivo}.pdf`);
-    }
-
-    exportarCSV(): void {
-        const BOM = '\uFEFF';
-        const headers = ['Autorización', 'Fecha Apertura', 'Fecha Servicio', 'Tipo PSS', 'PSS', 'Descripción', 'Monto'];
-
-        const escaparValor = (valor: string): string => {
-            if (!valor) return '';
-            const valorStr = valor.toString();
-            if (valorStr.includes(',') || valorStr.includes('"') || valorStr.includes('\n') || valorStr.includes('\r')) {
-                return '"' + valorStr.replace(/"/g, '""') + '"';
-            }
-            return valorStr;
-        };
-
-        const rows = this.autorizacionesFiltradas.map((auth) => [
-            escaparValor(auth.AUTORIZACION),
-            escaparValor(auth.FEC_APE),
-            escaparValor(auth.FEC_SER),
-            escaparValor(auth.TIPOPSS),
-            escaparValor(auth.PSS),
-            escaparValor(auth.DESCRIPCION),
-            escaparValor(auth.MONTO_AUTORIZADO)
-        ]);
-
-        const csv = BOM + [headers, ...rows].map((row) => row.join(',')).join('\r\n');
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-
-        const fecha = new Date().toISOString().split('T')[0];
-        link.setAttribute('href', url);
-        link.setAttribute('download', `autorizaciones_${fecha}.csv`);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
     }
 }

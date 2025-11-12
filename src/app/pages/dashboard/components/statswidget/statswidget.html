@@ -3,16 +3,44 @@
     <div class="card mb-0 h-full flex flex-col">
         <div class="flex justify-between mb-4">
             <div>
-                <span class="block text-muted-color font-medium mb-4" [style.font-size.rem]="1">{{ card.title }}</span>
+                <span class="block text-muted-color font-medium mb-4" [style.font-size.rem]="1.2">{{ card.title }}</span>
                 @if (card.loading) {
-                <div class="text-surface-500 dark:text-surface-400 font-medium text-xl" style="color: #264e72">Cargando...</div>
+                <div class="flex items-center gap-2">
+                    <div class="spinner-dots">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
                 } @else {
-                <div class="text-surface-900 dark:text-surface-0 font-medium text-xl" style="color: #f89420">{{ card.value }}</div>
+                <div class="text-surface-800 dark:text-surface-0 font-medium text-xl" style="color: #f89420; font-size: 1.5rem; font-weight: 400">{{ card.value }}</div>
                 }
             </div>
 
-            <div class="flex items-center justify-center rounded-border" [style.width.rem]="2.5" [style.height.rem]="2.5" [style.background-color]="'#f1f7fa'">
-                <i [class]="'pi ' + card.icon" [style.color]="'#264E72'" [style.font-size.rem]="1.25"></i>
+            <div class="flex items-center justify-center rounded-border p-3" [style.width.rem]="3.9" [style.height.rem]="3.9" [style.background-color]="'rgb(245 187 108 / 15%)'">
+                @if (card.id === 'consumed') {
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 3V21M18 3V21M6 3H18C19.1046 3 20 3.89543 20 5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V5C4 3.89543 4.89543 3 6 3Z" stroke="#F89420" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9 7H15M9 11H15M9 15H12" stroke="#F89420" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                } @else if (card.id === 'available') {
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="9" stroke="#F89420" stroke-width="2" />
+                    <path d="M12 6V12L16 14" stroke="#F89420" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                } @else if (card.id === 'authorizations') {
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="9" stroke="#F89420" stroke-width="2" />
+                    <path d="M9 12L11 14L15 10" stroke="#F89420" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                } @else if (card.id === 'dependents') {
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="7" r="3" stroke="#F89420" stroke-width="2" />
+                    <circle cx="17" cy="7" r="2" stroke="#F89420" stroke-width="2" />
+                    <path d="M5 20C5 16.6863 7.68629 14 11 14H13C14.1046 14 15 14.8954 15 16V20" stroke="#F89420" stroke-width="2" stroke-linecap="round" />
+                    <path d="M17 12C18.6569 12 20 13.3431 20 15V20" stroke="#F89420" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                }
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
 $primary: #264e72;
 $accent: #00aef0;
 $warning: #f89420;
-$success: #10b981;
+$success: #00aef0;
 $danger: #ef4444;
 $white: #ffffff;
 $gray-50: #f9fafb;
@@ -11,7 +11,7 @@ $gray-200: #e5e7eb;
 $gray-300: #d1d5db;
 $gray-400: #9ca3af;
 
-$gray-500: #6b7280;
+$gray-500: #264e72;
 $gray-600: #4b5563;
 
 $gray-700: #374151;
@@ -80,21 +80,21 @@ $gray-900: #111827;
 
             h1 {
                 font-size: 2.25rem;
-                font-weight: 800;
+                font-weight: 700;
                 color: $gray-900;
                 margin: 0 0 0.25rem 0;
                 letter-spacing: -0.5px;
-                background: linear-gradient(135deg, $primary 0%, $accent 100%);
+                background: #264e72;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
 
             .subtitle {
-                font-size: 0.938rem;
-                color: $gray-500;
+                font-size: 1.2rem;
+                color: #264e72;
                 margin: 0;
-                font-weight: 500;
+                font-weight: 400;
             }
         }
     }
@@ -136,13 +136,13 @@ $gray-900: #111827;
     }
 
     &.pdf {
-        background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        background: #00aef0;
         color: $white;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        box-shadow: 0 4px 12px 0 4px 12px rgb(0 174 240 / 32%);
 
         &:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 6px 16px 0 4px 12px rgb(0 174 240 / 32%);
         }
     }
 
@@ -213,7 +213,7 @@ $gray-900: #111827;
     }
 
     &.success .stat-background {
-        background: $success;
+        background: #00aef0;
     }
 
     &.warning .stat-background {
@@ -258,17 +258,16 @@ $gray-900: #111827;
         z-index: 1;
 
         .stat-label {
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: $gray-500;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            // text-transform: uppercase;
             margin-bottom: 0.5rem;
         }
 
         .stat-value {
             font-size: 2.5rem;
-            font-weight: 800;
+            font-weight: 400;
             color: $gray-900;
             line-height: 1;
         }
@@ -309,7 +308,7 @@ $gray-900: #111827;
     .search-input {
         width: 100%;
         padding: 1rem 3.5rem;
-        border: 2px solid $gray-200;
+        border: 1px solid $gray-200;
         border-radius: 14px;
         font-size: 0.938rem;
         transition: all 0.2s ease;
@@ -364,7 +363,7 @@ $gray-900: #111827;
     padding: 0.875rem 1.25rem;
     background: $gray-50;
     color: $gray-700;
-    border: 2px solid $gray-200;
+    border: 1px solid $gray-200;
     border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -390,7 +389,7 @@ $gray-900: #111827;
 
     select {
         padding: 0.75rem 2.5rem 0.75rem 1rem;
-        border: 2px solid $gray-200;
+        border: 1px solid $gray-200;
         border-radius: 12px;
         font-size: 0.875rem;
         font-weight: 600;
@@ -486,13 +485,11 @@ $gray-900: #111827;
         th {
             padding: 1.25rem 1.5rem;
             text-align: left;
-            font-weight: 700;
-            font-size: 0.813rem;
-            color: $gray-700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #264e72;
             background: $gray-50;
-            border-bottom: 2px solid $gray-200;
+            border-bottom: 1px solid $gray-200;
             position: sticky;
             top: 0;
             z-index: 10;
@@ -540,7 +537,7 @@ $gray-900: #111827;
             .column-filter {
                 width: 100%;
                 padding: 0.625rem 0.875rem;
-                border: 2px solid $gray-200;
+                border: 1px solid $gray-200;
                 border-radius: 10px;
                 font-size: 0.813rem;
                 transition: all 0.2s ease;
@@ -581,13 +578,11 @@ $gray-900: #111827;
                     .auth-badge {
                         display: inline-block;
                         padding: 0.5rem 1rem;
-                        background: linear-gradient(135deg, $accent 0%, darken($accent, 10%) 100%);
-                        color: $white;
+                        background: rgba(0, 174, 240, 0.1);
+                        color: #264e72;
                         border-radius: 10px;
-                        font-weight: 700;
+                        font-weight: 500;
                         font-size: 0.875rem;
-                        letter-spacing: 0.5px;
-                        box-shadow: 0 2px 8px rgba($accent, 0.3);
                     }
                 }
 
@@ -612,7 +607,7 @@ $gray-900: #111827;
                     letter-spacing: 0.5px;
 
                     &.medical {
-                        background: rgba($success, 0.15);
+                        background: #9ca3af38;
                         color: darken($success, 10%);
                     }
 
@@ -636,13 +631,12 @@ $gray-900: #111827;
 
                     .amount-value {
                         display: inline-block;
-                        padding: 0.625rem 1.25rem;
+                        padding: 0.425rem 1rem;
                         background: linear-gradient(135deg, $warning 0%, darken($warning, 10%) 100%);
                         color: $white;
                         border-radius: 10px;
-                        font-weight: 700;
-                        font-size: 1rem;
-                        box-shadow: 0 2px 8px rgba($warning, 0.3);
+                        font-weight: 500;
+                        font-size: 0.9rem;
                     }
                 }
             }
@@ -694,7 +688,7 @@ $gray-900: #111827;
 
 .pagination-info {
     font-size: 0.938rem;
-    color: $gray-600;
+    color: #264e72;
     font-weight: 500;
 
     strong {
@@ -712,7 +706,7 @@ $gray-900: #111827;
     min-width: 2.75rem;
     height: 2.75rem;
     padding: 0 0.875rem;
-    border: 2px solid $gray-200;
+    border: 1px solid $gray-200;
     background: $white;
     color: $gray-600;
     border-radius: 10px;
