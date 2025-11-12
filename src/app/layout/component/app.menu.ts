@@ -26,7 +26,7 @@ import { CapitalizePipe } from '@/shared/pipes/capitalize-pipe';
                                 <span class="user-role">{{ user.details?.Tipo | capitalize }}</span>
                             </div>
                         </div>
-                        <i [ngClass]="isProfileMenuOpen ? 'pi-chevron-up' : 'pi-chevron-down'" class="pi toggle-icon"></i>
+                        <i [ngClass]="isProfileMenuOpen ? 'pi-chevron-up' : 'pi-chevron-down'" class="pi toggle-icon" style="color:rgba(255, 255, 255, 0.3);"></i>
                     </div>
                 </div>
 
@@ -216,16 +216,6 @@ export class AppMenu {
                         routerLink: ['/page/health-provider']
                     },
                     {
-                        label: 'Autorizaciones',
-                        icon: 'bi bi-card-checklist',
-                        routerLink: ['/page/authorizations']
-                    },
-                    {
-                        label: 'Reembolsos',
-                        icon: 'pi pi-receipt',
-                        routerLink: ['/page/refund']
-                    },
-                    {
                         label: 'Pagos',
                         icon: 'pi pi-credit-card',
                         items: [
@@ -253,9 +243,14 @@ export class AppMenu {
                         routerLink: ['/page/documentation']
                     },
                     {
-                        label: 'Reporte de errores',
+                        label: 'Informes',
                         icon: 'pi pi-fw pi-wrench',
                         routerLink: ['/page/report']
+                    },
+                    {
+                        label: 'Reporte de errores',
+                        icon: 'pi pi-fw pi-wrench',
+                        routerLink: ['/page/error-report']
                     }
                 ]
             },

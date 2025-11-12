@@ -1,1 +1,347 @@
-<p>refund works!</p>
+<div class="refund-container">
+    <!-- Header Modernizado -->
+    <div class="header">
+        <div class="header-content">
+            <div class="title-group">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Reembolsos Médicos</h1>
+                    <p class="subtitle">Gestión integral de reembolsos y solicitudes</p>
+                </div>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="btn-export pdf" (click)="exportarPDF()" [disabled]="reembolsosFiltrados.length === 0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                Exportar PDF
+            </button>
+            <button class="btn-export csv" (click)="exportarCSV()" [disabled]="reembolsosFiltrados.length === 0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Exportar CSV
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Cards Modernizadas -->
+    <div class="stats-grid" *ngIf="!isLoading">
+        <div class="stat-card primary">
+            <div class="stat-background"></div>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <span class="stat-label">Total Reembolsos</span>
+                <span class="stat-value">{{ reembolsos.length }}</span>
+            </div>
+        </div>
+        <div class="stat-card success">
+            <div class="stat-background"></div>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <span class="stat-label">Registros Filtrados</span>
+                <span class="stat-value">{{ reembolsosFiltrados.length }}</span>
+            </div>
+        </div>
+        <div class="stat-card warning">
+            <div class="stat-background"></div>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <span class="stat-label">Monto Total</span>
+                <span class="stat-value">RD$ {{ calcularTotalMonto().toLocaleString('es-DO', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</span>
+            </div>
+        </div>
+        <div class="stat-card info">
+            <div class="stat-background"></div>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+            </div>
+            <div class="stat-content">
+                <span class="stat-label">Total Páginas</span>
+                <span class="stat-value">{{ totalPaginas }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filters Modernizado -->
+    <div class="search-section">
+        <div class="search-wrapper">
+            <div class="search-container">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input 
+                    type="text" 
+                    [(ngModel)]="filtroGlobal" 
+                    (ngModelChange)="aplicarFiltros()" 
+                    placeholder="Buscar en todos los campos..." 
+                    class="search-input"
+                />
+                <button *ngIf="filtroGlobal" class="clear-search" (click)="filtroGlobal=''; aplicarFiltros()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-actions">
+            <button class="btn-filter" (click)="limpiarFiltros()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"/>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                </svg>
+                Limpiar Filtros
+            </button>
+
+            <div class="items-selector">
+                <label>Mostrar</label>
+                <select [(ngModel)]="itemsPorPagina" (ngModelChange)="cambiarItemsPorPagina()">
+                    <option *ngFor="let opcion of opcionesPaginas" [value]="opcion">{{ opcion }}</option>
+                </select>
+                <span class="selector-label">por página</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State Modernizado -->
+    <div *ngIf="isLoading" class="loading-state">
+        <div class="loading-animation">
+            <div class="loading-circle"></div>
+            <div class="loading-circle"></div>
+            <div class="loading-circle"></div>
+        </div>
+        <p class="loading-text">Cargando reembolsos...</p>
+    </div>
+
+    <!-- Table Card Modernizada -->
+    <div *ngIf="!isLoading" class="table-card">
+        <div class="table-wrapper">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th (click)="ordenarPor('SECUENCIAL')" class="sortable">
+                            <div class="th-content">
+                                <span>Secuencial</span>
+                                <svg *ngIf="columnaOrden !== 'SECUENCIAL'" class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'SECUENCIAL' && ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'SECUENCIAL' && !ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                            <input 
+                                type="text" 
+                                [(ngModel)]="filtros.SECUENCIAL" 
+                                (ngModelChange)="aplicarFiltros()" 
+                                (click)="$event.stopPropagation()" 
+                                placeholder="Filtrar..." 
+                                class="column-filter"
+                            />
+                        </th>
+                        <th (click)="ordenarPor('FEC_SER')" class="sortable">
+                            <div class="th-content">
+                                <span>F. Servicio</span>
+                                <svg *ngIf="columnaOrden !== 'FEC_SER'" class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'FEC_SER' && ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'FEC_SER' && !ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                            <input type="text" [(ngModel)]="filtros.FEC_SER" (ngModelChange)="aplicarFiltros()" (click)="$event.stopPropagation()" placeholder="Filtrar..." class="column-filter"/>
+                        </th>
+                        <th (click)="ordenarPor('TIP_A_USO')" class="sortable">
+                            <div class="th-content">
+                                <span>Tipo</span>
+                                <svg *ngIf="columnaOrden !== 'TIP_A_USO'" class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'TIP_A_USO' && ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'TIP_A_USO' && !ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                            <input type="text" [(ngModel)]="filtros.TIP_A_USO" (ngModelChange)="aplicarFiltros()" (click)="$event.stopPropagation()" placeholder="Filtrar..." class="column-filter"/>
+                        </th>
+                        <th (click)="ordenarPor('DESCRIPCION')" class="sortable">
+                            <div class="th-content">
+                                <span>Descripción</span>
+                                <svg *ngIf="columnaOrden !== 'DESCRIPCION'" class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'DESCRIPCION' && ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'DESCRIPCION' && !ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                            <input type="text" [(ngModel)]="filtros.DESCRIPCION" (ngModelChange)="aplicarFiltros()" (click)="$event.stopPropagation()" placeholder="Filtrar..." class="column-filter"/>
+                        </th>
+                        <th (click)="ordenarPor('ESTATUS')" class="sortable">
+                            <div class="th-content">
+                                <span>Estatus</span>
+                                <svg *ngIf="columnaOrden !== 'ESTATUS'" class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'ESTATUS' && ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'ESTATUS' && !ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                            <input type="text" [(ngModel)]="filtros.ESTATUS" (ngModelChange)="aplicarFiltros()" (click)="$event.stopPropagation()" placeholder="Filtrar..." class="column-filter"/>
+                        </th>
+                        <th (click)="ordenarPor('MON_PAG')" class="sortable amount-col">
+                            <div class="th-content">
+                                <span>Monto Pagado</span>
+                                <svg *ngIf="columnaOrden !== 'MON_PAG'" class="sort-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'MON_PAG' && ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <svg *ngIf="columnaOrden === 'MON_PAG' && !ordenAscendente" class="sort-icon active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                            <input type="text" [(ngModel)]="filtros.MON_PAG" (ngModelChange)="aplicarFiltros()" (click)="$event.stopPropagation()" placeholder="Filtrar..." class="column-filter"/>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let reembolso of reembolsosPaginados; let i = index">
+                        <td class="sequential-number">
+                            <span class="sequential-badge">{{ reembolso.SECUENCIAL }}</span>
+                        </td>
+                        <td>
+                            <div class="date-cell">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                {{ reembolso.FEC_SER }}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="type-badge">{{ reembolso.TIP_A_USO }}</span>
+                        </td>
+                        <td class="description">{{ reembolso.DESCRIPCION }}</td>
+                        <td>
+                            <span class="status-badge" [ngClass]="getEstatusClass(reembolso.ESTATUS)">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                {{ reembolso.ESTATUS }}
+                            </span>
+                        </td>
+                        <td class="amount">
+                            <span class="amount-value">RD$ {{ reembolso.MON_PAG }}</span>
+                        </td>
+                    </tr>
+                    <tr *ngIf="reembolsosPaginados.length === 0">
+                        <td colspan="6" class="empty-state">
+                            <div class="empty-content">
+                                <div class="empty-icon">
+                                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                </div>
+                                <h3>No se encontraron resultados</h3>
+                                <p>Intenta ajustar los filtros de búsqueda o limpia los filtros activos</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Modernizada -->
+        <div *ngIf="reembolsosFiltrados.length > 0" class="pagination">
+            <div class="pagination-info">
+                <span>Mostrando <strong>{{ rangoMostrado }}</strong> registros</span>
+            </div>
+
+            <div class="pagination-controls">
+                <button class="page-btn first" (click)="cambiarPagina(1)" [disabled]="paginaActual === 1" title="Primera página">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="11 17 6 12 11 7"/>
+                        <polyline points="18 17 13 12 18 7"/>
+                    </svg>
+                </button>
+
+                <button class="page-btn prev" (click)="cambiarPagina(paginaActual - 1)" [disabled]="paginaActual === 1" title="Página anterior">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                </button>
+
+                <button 
+                    *ngFor="let pagina of paginasArray" 
+                    class="page-btn page-number" 
+                    [class.active]="pagina === paginaActual" 
+                    (click)="cambiarPagina(pagina)"
+                >
+                    {{ pagina }}
+                </button>
+
+                <button class="page-btn next" (click)="cambiarPagina(paginaActual + 1)" [disabled]="paginaActual === totalPaginas" title="Página siguiente">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </button>
+
+                <button class="page-btn last" (click)="cambiarPagina(totalPaginas)" [disabled]="paginaActual === totalPaginas" title="Última página">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="13 17 18 12 13 7"/>
+                        <polyline points="6 17 11 12 6 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

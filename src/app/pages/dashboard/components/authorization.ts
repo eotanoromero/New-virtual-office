@@ -47,7 +47,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                             <div class="info-item">
                                 <i class="pi pi-calendar icon-calendar"></i>
                                 <div class="info-text">
-                                    <span class="label">FECHA DE APERTURA</span>
+                                    <span class="label">Fecha de apertura</span>
                                     <span class="value">{{ aut.FEC_APE || 'Sin fecha' }}</span>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                             <div class="info-item">
                                 <i class="pi pi-file-edit icon-desc"></i>
                                 <div class="info-text">
-                                    <span class="label">DESCRIPCIÓN</span>
+                                    <span class="label">Descripcion</span>
                                     <span class="value">{{ aut.DESCRIPCION | capitalize }}</span>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                             <div class="info-item amount-box">
                                 <i class="pi pi-dollar icon-amount"></i>
                                 <div class="info-text">
-                                    <span class="label">MONTO AUTORIZADO</span>
+                                    <span class="label">Monto autorizado</span>
                                     <span class="value amount">RD$ {{ formatAmount(aut.MONTO_AUTORIZADO) }}</span>
                                 </div>
                             </div>
@@ -174,7 +174,8 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
 
             // Card Top - versión más suave
             .card-top {
-                background: #264e72;
+                // background: #264e72;
+                border: 1px solid #264e72;
                 padding: 0.875rem 1rem;
                 display: flex;
                 justify-content: space-between;
@@ -185,7 +186,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 display: inline-flex;
                 align-items: center;
                 gap: 0.375rem;
-                background: rgba(0, 174, 240, 0.15);
+                background: #264e72;
                 padding: 0.25rem 0.625rem;
                 border-radius: 12px;
                 color: #ffffff;
@@ -251,13 +252,13 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 }
 
                 .icon-desc {
-                    background: rgba(38, 78, 114, 0.1);
-                    color: #264e72;
+                    background: rgba(0, 174, 240, 0.1);
+                    color: #00aef0;
                 }
 
                 .icon-amount {
-                    background: rgba(248, 148, 32, 0.15);
-                    color: #f89420;
+                    background: rgba(0, 174, 240, 0.1);
+                    color: #00aef0;
                 }
             }
 
@@ -270,15 +271,14 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
             }
 
             .label {
-                font-size: 0.688rem;
+                font-size: 1.2rem;
                 font-weight: 600;
                 color: #9ca3af;
-                text-transform: uppercase;
                 letter-spacing: 0.3px;
             }
 
             .value {
-                font-size: 0.875rem;
+                font-size: 0.99rem;
                 font-weight: 500;
                 color: #264e72;
                 word-wrap: break-word;
@@ -291,7 +291,6 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 }
             }
 
-            // Card Footer
             .card-footer {
                 padding: 0.75rem 1rem;
                 border-top: 1px solid #f0f0f0;
@@ -300,7 +299,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 button {
                     width: 100%;
                     justify-content: center;
-                    font-size: 0.813rem;
+                    font-size: 1rem;
                     font-weight: 600;
                     color: #00aef0;
                     padding: 0.5rem;
@@ -363,7 +362,7 @@ import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
                 }
 
                 p {
-                    font-size: 0.938rem;
+                    font-size: 2rem;
                     color: #6b7280;
                     margin: 0;
                 }

@@ -47,4 +47,21 @@ export class StatsService {
             })
         );
     }
+
+    getRefunds(codigo: string): Observable<any> {
+        const url = `${this.baseUrl}/Provider/Reembolsos_JS?codemp=${encodeURIComponent(codigo)}`;
+        return this.http.get<any>(url).pipe(
+            map((response) => {
+                if (typeof response === 'string') {
+                    return JSON.parse(response);
+                }
+                return response;
+            }),
+            tap((parsed) => {}),
+            catchError((error) => {
+                console.error('Error al obtener reembolsos:', error);
+                return of({ Table: [] });
+            })
+        );
+    }
 }

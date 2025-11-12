@@ -94,8 +94,8 @@ export class RevenueStreamWidget {
             datasets: [
                 {
                     data: [this.consumido, this.disponible],
-                    backgroundColor: ['#F89420', '#00AEF0'],
-                    hoverBackgroundColor: ['#ffa940', '#33bff5'],
+                    backgroundColor: ['#F89420', '#264e72'],
+                    hoverBackgroundColor: ['#ffa940', '#264e72'],
                     borderWidth: 2,
                     borderColor: '#ffffff'
                 }

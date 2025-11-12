@@ -4,6 +4,17 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug",
-    "pathRewrite": { "^/api": "" }
+    "pathRewrite": { 
+      "^/api": "" 
+    }
+  },
+  "/mailjet": {
+    "target": "https://api.mailjet.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": { 
+      "^/mailjet": "" 
+    }
   }
 }

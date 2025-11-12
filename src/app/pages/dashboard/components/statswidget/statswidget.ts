@@ -219,7 +219,6 @@ export class Statswidget implements OnInit {
     getAuthorizations(codigo: string): void {
         this.statsService.getAuthorizations(codigo).subscribe({
             next: (data) => {
-                // Asignar directamente sin el operador ||
                 this.autorizaciones = data.Table;
 
                 this.updateAutorizationsCard();

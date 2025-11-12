@@ -1,1 +1,231 @@
-<p>add-report works!</p>
+<div class="error-report-container">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <h1>Reportar Error</h1>
+            <p class="subtitle">Ayúdanos a mejorar reportando cualquier problema que encuentres</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+            </div>
+            <div class="stat-content">
+                <span class="stat-value">24/7</span>
+                <span class="stat-label">Soporte</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+            </div>
+            <div class="stat-content">
+                <span class="stat-value">Rápido</span>
+                <span class="stat-label">Respuesta</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon purple">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+            </div>
+            <div class="stat-content">
+                <span class="stat-value">100%</span>
+                <span class="stat-label">Seguimiento</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="showSuccessMessage" class="alert alert-success">
+        <div class="alert-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+        </div>
+        <div class="alert-content">
+            <h4>¡Reporte enviado exitosamente!</h4>
+            <p>Tu reporte ha sido enviado al equipo de soporte. Recibirás una respuesta pronto.</p>
+        </div>
+        <button class="alert-close" (click)="showSuccessMessage = false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="showErrorMessage" class="alert alert-error">
+        <div class="alert-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+        </div>
+        <div class="alert-content">
+            <h4>Error al enviar el reporte</h4>
+            <p>{{ errorMessage }}</p>
+        </div>
+        <button class="alert-close" (click)="showErrorMessage = false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Form Card -->
+    <div class="form-card">
+        <form (ngSubmit)="submitReport()">
+            <!-- User Info Section -->
+            <div class="section-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <h3>Información del Usuario</h3>
+            </div>
+
+            <div class="user-info-box">
+                <div class="user-info-item">
+                    <span class="label">Nombre:</span>
+                    <span class="value">{{ userDetails?.Nombre || 'No disponible' }}</span>
+                </div>
+                <div class="user-info-item">
+                    <span class="label">Código:</span>
+                    <span class="value">{{ userDetails?.Codigo || 'No disponible' }}</span>
+                </div>
+            </div>
+
+            <!-- Error Details Section -->
+            <div class="section-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <h3>Detalles del Error</h3>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tipo">
+                        Tipo de Error
+                        <span class="required">*</span>
+                    </label>
+                    <select id="tipo" [(ngModel)]="report.tipo" name="tipo" required>
+                        <option value="" disabled>Selecciona un tipo</option>
+                        <option *ngFor="let tipo of tiposError" [value]="tipo.value">{{ tipo.label }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modulo">
+                        Módulo Afectado
+                        <span class="required">*</span>
+                    </label>
+                    <select id="modulo" [(ngModel)]="report.modulo" name="modulo" required>
+                        <option value="" disabled>Selecciona un módulo</option>
+                        <option *ngFor="let modulo of modulos" [value]="modulo.value">{{ modulo.label }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="prioridad">
+                    Prioridad
+                    <span class="required">*</span>
+                </label>
+                <div class="priority-selector">
+                    <label *ngFor="let prioridad of prioridades" class="priority-option">
+                        <input type="radio" [(ngModel)]="report.prioridad" [value]="prioridad.value" name="prioridad" />
+                        <span class="priority-badge" [style.background-color]="prioridad.color"> {{ prioridad.label }} </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">
+                    Descripción del Error
+                    <span class="required">*</span>
+                    <span class="char-counter">{{ getCharacterCount() }}/500</span>
+                </label>
+                <textarea id="descripcion" [(ngModel)]="report.descripcion" name="descripcion" rows="5" maxlength="500" placeholder="Describe el error con el mayor detalle posible..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="pasos"> Pasos para Reproducir (Opcional) </label>
+                <textarea id="pasos" [(ngModel)]="report.pasos" name="pasos" rows="4" placeholder="1. Ir a la sección...&#10;2. Hacer clic en...&#10;3. Observar que..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="file-input"> Adjuntar Captura (Opcional) </label>
+                <div class="file-upload-area">
+                    <input type="file" id="file-input" (change)="onFileSelected($event)" accept="image/*,.pdf" hidden />
+
+                    <div *ngIf="!report.adjunto" class="upload-placeholder" (click)="openFileInput()">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                        <p class="upload-text">Haz clic para seleccionar un archivo</p>
+                        <p class="upload-hint">PNG, JPG, GIF o PDF (máx. 5MB)</p>
+                    </div>
+
+                    <div *ngIf="report.adjunto" class="file-preview">
+                        <div class="file-info">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                                <polyline points="13 2 13 9 20 9" />
+                            </svg>
+                            <div class="file-details">
+                                <span class="file-name">{{ report.adjunto?.name }}</span>
+                                <span class="file-size">{{ report.adjunto ? (report.adjunto.size / 1024 / 1024).toFixed(2) : '0' }} MB</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-remove-file" (click)="removeFile()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" (click)="resetForm()" [disabled]="isSubmitting">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                    </svg>
+                    Limpiar
+                </button>
+                <button type="submit" class="btn-primary" [disabled]="!isFormValid() || isSubmitting">
+                    <svg *ngIf="!isSubmitting" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 11 12 14 22 4" />
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                    </svg>
+                    <div *ngIf="isSubmitting" class="btn-spinner"></div>
+                    {{ isSubmitting ? 'Enviando...' : 'Enviar Reporte' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
