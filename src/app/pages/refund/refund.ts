@@ -71,7 +71,6 @@ export class Refund {
     getRefunds(codigo: string): void {
         this.statsService.getRefunds(codigo).subscribe({
             next: (data) => {
-                // Asumiendo que la data viene en data.Table o similar
                 this.reembolsos = data.Table || data || [];
                 this.aplicarFiltros();
                 this.isLoading = false;
@@ -196,7 +195,8 @@ export class Refund {
 
     calcularTotalMonto(): number {
         return this.reembolsosFiltrados.reduce((total, reembolso) => {
-            const monto = parseFloat(reembolso.MON_PAG?.replace(/,/g, '') || '0');
+            const monto = parseFloat((reembolso.MON_PAG?.trim() || '0').replace(/,/g, ''));
+
             return total + monto;
         }, 0);
     }

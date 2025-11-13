@@ -65,7 +65,7 @@ export class Reports implements OnInit {
             title: 'Reporte General',
             description: 'Resumen completo de toda la actividad',
             icon: 'chart',
-            color: '#10b981',
+            color: '#5B5E61',
             available: true
         }
     ];
