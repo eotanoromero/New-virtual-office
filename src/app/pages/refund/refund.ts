@@ -39,7 +39,7 @@ export class Refund {
 
     // Paginación
     paginaActual: number = 1;
-    itemsPorPagina: number = 10;
+    itemsPorPagina: number = 5;
     totalPaginas: number = 0;
     opcionesPaginas: number[] = [5, 10, 20, 50, 100];
 

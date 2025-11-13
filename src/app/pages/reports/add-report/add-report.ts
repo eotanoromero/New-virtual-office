@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CapitalizePipe } from '../../../shared/pipes/capitalize-pipe';
 
 interface ErrorReport {
     tipo: string;
@@ -21,7 +22,7 @@ interface UserDetails {
 @Component({
     selector: 'app-add-report',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, CapitalizePipe],
     templateUrl: './add-report.html',
     styleUrls: ['./add-report.scss']
 })
@@ -64,9 +65,9 @@ export class AddReport implements OnInit {
     ];
 
     prioridades = [
-        { value: 'baja', label: 'Baja', color: '#10b981' },
-        { value: 'media', label: 'Media', color: '#f59e0b' },
-        { value: 'alta', label: 'Alta', color: '#ef4444' }
+        { value: 'baja', label: 'Baja', color: '#DFE5EA' },
+        { value: 'media', label: 'Media', color: '#FFF7EE' },
+        { value: 'alta', label: 'Alta', color: '#E0F3F9' }
     ];
 
     constructor(private http: HttpClient) {}

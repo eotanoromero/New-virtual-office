@@ -1,124 +1,220 @@
 <div class="reports-container">
-    <!-- Header -->
+    <!-- Header Modernizado -->
     <div class="header">
         <div class="header-content">
-            <h1>Reportes</h1>
-            <p class="subtitle">Genera y descarga reportes detallados de tu información</p>
+            <div class="title-group">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>Reportes</h1>
+                    <p class="subtitle">Genera y descarga reportes detallados de tu información</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Stats Cards -->
+    <!-- Stats Cards Modernizadas -->
     <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon blue">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="stat-card primary">
+            <div class="stat-background"></div>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                     <polyline points="14 2 14 8 20 8" />
                 </svg>
             </div>
             <div class="stat-content">
+                <span class="stat-label">Tipos Disponibles</span>
                 <span class="stat-value">{{ reportTypes.length }}</span>
-                <span class="stat-label">Tipos</span>
             </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon green">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <div class="stat-card success">
+            <div class="stat-background"></div>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                     <polyline points="7 10 12 15 17 10" />
                     <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
             </div>
             <div class="stat-content">
+                <span class="stat-label">Formato de Descarga</span>
                 <span class="stat-value">PDF</span>
-                <span class="stat-label">Formato</span>
             </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon purple">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <div class="stat-card warning">
+            <div class="stat-background"></div>
+            <div class="stat-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                 </svg>
             </div>
             <div class="stat-content">
-                <span class="stat-value">Rápido</span>
-                <span class="stat-label">Descarga</span>
+                <span class="stat-label">Velocidad de Generación</span>
+                <span class="stat-value">Rápida</span>
             </div>
         </div>
     </div>
 
-    <!-- Report Selection Section -->
-    <div class="report-selection-card">
+    <!-- Date Selection Card -->
+    <div class="date-selection-card">
         <div class="section-header">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
             <h3>Selecciona el Período del Reporte</h3>
         </div>
 
         <div class="date-range-selector">
             <div class="date-input-group">
-                <label for="startDate">Fecha Inicial</label>
+                <label for="startDate"> Fecha Inicial </label>
                 <input type="date" id="startDate" [(ngModel)]="dateRange.startDate" [max]="dateRange.endDate" />
             </div>
-            <div class="date-separator">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                </svg>
-            </div>
+
             <div class="date-input-group">
-                <label for="endDate">Fecha Final</label>
+                <label for="endDate"> Fecha Final </label>
                 <input type="date" id="endDate" [(ngModel)]="dateRange.endDate" [min]="dateRange.startDate" />
             </div>
         </div>
     </div>
 
-    <!-- Report Types Grid -->
-    <div class="report-types-grid">
-        <div *ngFor="let report of reportTypes" class="report-type-card" [class.selected]="selectedReport === report.id" [class.disabled]="!report.available" (click)="report.available && selectReport(report.id)">
-            <div class="report-icon" [style.background-color]="report.color">
-                <span class="icon-emoji">{{ getReportIcon(report.icon) }}</span>
-            </div>
-            <div class="report-info">
-                <h4 class="report-title">{{ report.title }}</h4>
-                <p class="report-description">{{ report.description }}</p>
-            </div>
-            <div class="report-status">
-                <span *ngIf="report.available" class="status-badge available">Disponible</span>
-                <span *ngIf="!report.available" class="status-badge unavailable">Próximamente</span>
-            </div>
-            <div *ngIf="selectedReport === report.id" class="selected-indicator">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="20 6 9 17 4 12" />
-                </svg>
+    <!-- Report Types Grid Modernizada -->
+    <div class="report-types-section">
+        <div class="section-header">
+            <h3>Tipos de Reportes Disponibles</h3>
+        </div>
+
+        <div class="report-types-grid">
+            <div *ngFor="let report of reportTypes" class="report-type-card" [class.selected]="selectedReport === report.id" [class.disabled]="!report.available" (click)="report.available && selectReport(report.id)">
+                <div class="report-background"></div>
+
+                <div class="report-icon" [style.background]="getReportGradient(report.color)">
+                    <!-- Health Icon -->
+                    <svg *ngIf="report.icon === 'health'" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
+                    <!-- Money Icon -->
+                    <svg *ngIf="report.icon === 'money'" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23" />
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                    </svg>
+                    <!-- Users Icon -->
+                    <svg *ngIf="report.icon === 'users'" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <!-- Chart Icon -->
+                    <svg *ngIf="report.icon === 'chart'" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                    <!-- Document Icon -->
+                    <svg *ngIf="report.icon === 'document'" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    <!-- File Icon -->
+                    <svg *ngIf="report.icon === 'file'" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                        <polyline points="13 2 13 9 20 9" />
+                    </svg>
+                    <!-- Analytics Icon -->
+                    <svg *ngIf="report.icon === 'analytics'" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                </div>
+
+                <div class="report-info">
+                    <h4 class="report-title">{{ report.title }}</h4>
+                    <p class="report-description">{{ report.description }}</p>
+                </div>
+
+                <div class="report-status">
+                    <span *ngIf="report.available" class="status-badge available">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        Disponible
+                    </span>
+                    <span *ngIf="!report.available" class="status-badge unavailable">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        Próximamente
+                    </span>
+                </div>
+
+                <div *ngIf="selectedReport === report.id" class="selected-indicator">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Action Buttons -->
+    <!-- Action Card Modernizada -->
     <div class="action-section">
         <div class="action-card">
             <div class="action-info">
                 <h3>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10" />
                         <path d="M12 16v-4" />
                         <path d="M12 8h.01" />
                     </svg>
                     Información del Reporte
                 </h3>
-                <p *ngIf="!selectedReport" class="info-text">Selecciona un tipo de reporte para continuar</p>
-                <p *ngIf="selectedReport" class="info-text">
-                    <strong>Reporte seleccionado:</strong> {{ selectedReportData?.title }}
-                    <br />
-                    <strong>Período:</strong> {{ dateRange.startDate }} al {{ dateRange.endDate }}
-                    <br />
-                    <strong>Formato:</strong> PDF (Portable Document Format)
-                </p>
+                <p *ngIf="!selectedReport" class="info-text">Selecciona un tipo de reporte y configura el período para continuar con la generación.</p>
+                <div *ngIf="selectedReport" class="info-details">
+                    <div class="info-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                        <div>
+                            <span class="info-label">Reporte Seleccionado</span>
+                            <span class="info-value">{{ selectedReportData?.title }}</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        <div>
+                            <span class="info-label">Período</span>
+                            <span class="info-value">{{ dateRange.startDate }} al {{ dateRange.endDate }}</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <div>
+                            <span class="info-label">Formato</span>
+                            <span class="info-value">PDF (Portable Document Format)</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="action-buttons">
@@ -135,7 +231,7 @@
         </div>
     </div>
 
-    <!-- User Info Box -->
+    <!-- User Info Card Modernizada -->
     <div class="user-info-card">
         <div class="user-avatar">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -144,14 +240,14 @@
             </svg>
         </div>
         <div class="user-details">
-            <h4>Información del Afiliado</h4>
+            <h4>Información del Usuario</h4>
             <div class="user-data">
                 <div class="data-item">
-                    <span class="label">Nombre: </span>
-                    <span class="value"> {{ userDetails?.Nombre || 'No disponible' }}</span>
+                    <span class="label"> Nombre </span>
+                    <span class="value">{{ userDetails?.Nombre || 'No disponible' | capitalize }}</span>
                 </div>
                 <div class="data-item">
-                    <span class="label">Código: </span>
+                    <span class="label"> Código </span>
                     <span class="value">{{ userDetails?.Codigo || 'No disponible' }}</span>
                 </div>
             </div>

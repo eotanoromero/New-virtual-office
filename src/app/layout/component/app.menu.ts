@@ -237,18 +237,18 @@ export class AppMenu {
             {
                 label: 'Contactanos',
                 items: [
-                    {
-                        label: 'Contacto',
-                        icon: 'pi pi-fw pi-headphones',
-                        routerLink: ['/page/documentation']
-                    },
+                    // {
+                    //     label: 'Contacto',
+                    //     icon: 'pi pi-fw pi-headphones',
+                    //     routerLink: ['/page/documentation']
+                    // },
                     {
                         label: 'Informes',
                         icon: 'pi pi-fw pi-wrench',
                         routerLink: ['/page/report']
                     },
                     {
-                        label: 'Reporte de errores',
+                        label: 'Soporte tecnico',
                         icon: 'pi pi-fw pi-wrench',
                         routerLink: ['/page/error-report']
                     }
